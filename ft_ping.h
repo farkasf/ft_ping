@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/14 01:29:29 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/14 03:09:00 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,31 @@ typedef struct s_options
     unsigned int    verbose;
 }   t_options;
 
+typedef struct s_timer
+{
+    struct timeval  begin;
+    struct timeval  rtt_start;
+    struct timeval  rtt_finish;
+}   t_timer;
+
 typedef struct s_ping
 {
     t_options   options;
     t_network   network;
 }   t_ping;
+
+void    print_usage(void);
+void    free_struct(t_ping *ping);
+void    check_uid(void);
+
+char	*ft_strdup(const char *src);
+void    check_option(t_ping *ping, char *flag);
+void    parse_args(t_ping *ping, int ac, char **av);
+
+int     set_packet_lifetime(int socket_fd);
+int     resolve_host(char *hostname, struct addrinfo **res);
+int     get_socket_ip(t_ping *ping);
+int     setup_socket(t_ping *ping);
+
 
 #endif
