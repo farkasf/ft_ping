@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/14 03:09:00 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/14 03:45:24 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,16 @@
 # include <sys/socket.h>
 # include <netdb.h>
 # include <netinet/in.h>
+# include <netinet/ip.h>
 # include <netinet/ip_icmp.h>
 
 # define DEF_TTL 64
+# define IP_HDR
+# define ICMP_HDR 8
+# define ICMP_DATA 56
+# define ICMP_PACKET (ICMP_HDR+ICMP_DATA)
+# define ICMP_MAX_PACKET (1500 - IP_HDR - ICMP_HDR)
+# define ICMP_ECHO 0
 
 typedef struct s_network
 {
@@ -55,6 +62,7 @@ typedef struct s_ping
 {
     t_options   options;
     t_network   network;
+    t_timer     timer;
 }   t_ping;
 
 void    print_usage(void);
@@ -70,5 +78,6 @@ int     resolve_host(char *hostname, struct addrinfo **res);
 int     get_socket_ip(t_ping *ping);
 int     setup_socket(t_ping *ping);
 
+void    ping_routine(t_ping *ping);
 
 #endif

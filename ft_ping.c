@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:01 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/14 03:17:15 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/14 03:45:34 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,11 @@ int main(int ac, char **av)
     printf("%s\n", ping.network.host_ip);
 
     signal(SIGINT, &sig_handler);
+    gettimeofday(&(ping.timer.begin), NULL);
     
     while (1)
     {
-        //ping
+        ping_routine(&ping);
         //wait a bit
         if (g_sig_status == 0)
             break ;
