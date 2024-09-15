@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 21:34:13 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 22:01:37 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_reply
 	ssize_t			recv_bytes;
 	int				code;
 	int				type;
-	unsigned int	success;
+	int				success;
 	uint16_t		sequence;
 }	t_reply;
 

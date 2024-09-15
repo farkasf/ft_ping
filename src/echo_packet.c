@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 08:46:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 18:33:42 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 22:05:07 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	receive_echo_reply(t_ping *ping, t_reply *reply)
 		free_struct(ping);
 		exit(EXIT_FAILURE);
 	}
-	ping->network.packets_received++;}
+	ping->network.packets_received++;
+}
 
 void	send_echo_request(t_ping *ping)
 {

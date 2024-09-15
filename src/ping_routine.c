@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 22:00:36 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 22:35:50 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ void	analyze_reply(t_reply *reply)
 	
 	if (icmp_hdr->type == ICMP_ECHOREPLY && ntohs(icmp_hdr->un.echo.id) == getpid())
 		reply->success = 1;
-	else if (icmp_hdr->type != ICMP_ECHOREPLY)
+	else
 	{
-		reply->success = -1;
+		if (icmp_hdr->type != ICMP_ECHO)
+			reply->success = -1;
 		dprintf(STDOUT_FILENO, "Received ICMP type: %d, code: %d\n", icmp_hdr->type, icmp_hdr->code);
 		reply->code = icmp_hdr->code;
 		reply->type = icmp_hdr->type;
@@ -38,7 +39,7 @@ void	ping_routine(t_ping *ping)
 	t_reply	echo_reply;
 
 	memset(&echo_reply, 0, sizeof(t_reply));
-	echo_reply.success = 1;
+	echo_reply.success = 0;
 
 	send_echo_request(ping);
 	receive_echo_reply(ping, &echo_reply);
