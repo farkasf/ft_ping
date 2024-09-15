@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 18:46:30 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 21:24:19 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	analyze_reply(t_ping *ping, t_reply *reply)
 		reply->type = icmp_hdr->type;
 		return ;
 	}
+
+	reply->sequence = icmp_hdr.un.echo.sequence;
 }
 
 void	ping_routine(t_ping *ping)
@@ -34,13 +36,13 @@ void	ping_routine(t_ping *ping)
 	t_reply	echo_reply;
 
 	memset(&echo_reply, 0, sizeof(t_reply));
-	echo_reply.success = 0;
+	echo_reply.success = 1;
 
 	send_echo_request(ping);
 	receive_echo_reply(ping, &echo_reply);
 	analyze_reply(ping, &echo_reply);
 	
-	if (echo_reply.success != 0)
+	if (echo_reply.success != 1)
 	{
 		dprintf(STDOUT_FILENO, "ICMP protocol error\n");
 		//log error and exit
@@ -49,6 +51,7 @@ void	ping_routine(t_ping *ping)
 	if (echo_reply.recv_bytes > 0)
 	{
 		dprintf(STDOUT_FILENO, "successfully exchanged echo\n");
+		print_ping_response(ping, &echo_reply);
 		//print log
 	}
 	else

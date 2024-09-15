@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:01 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 16:46:26 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 21:12:56 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int main(int ac, char **av)
 	ping_setup(&ping);
 
 	signal(SIGINT, &sig_handler);
+	print_ping_header(&ping);
 
 	while (1)
 	{

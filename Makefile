@@ -4,6 +4,7 @@ SRC =	./src/echo_packet.c \
 		./src/parser.c \
 		./src/ping_routine.c \
 		./src/socket.c \
+		./src/response.c \
 		./src/utils.c
 OBJS = $(SRC:.c=.o)
 CFLAGS = -Wall -Wextra -Werror
