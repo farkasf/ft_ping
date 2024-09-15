@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 21:26:45 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 21:27:47 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	analyze_reply(t_reply *reply)
 		return ;
 	}
 
-	reply->sequence = icmp_hdr.un.echo.sequence;
+	reply->sequence = icmp_hdr->un.echo.sequence;
 }
 
 void	ping_routine(t_ping *ping)
