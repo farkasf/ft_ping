@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 16:08:45 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 16:54:28 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ typedef struct s_network
 	struct sockaddr_in	remote_addr;
 	char				host_ip[INET_ADDRSTRLEN];
 	char				*hostname;
-	int					packets_sent;
+	unsigned int		packets_sent;
+	unsigned int		packets_received;
 }	t_network;
 
 typedef struct s_options
@@ -50,6 +51,12 @@ typedef struct s_options
 	unsigned int	help;
 	unsigned int	verbose;
 }	t_options;
+
+typedef struct s_reply
+{
+	char	recv_data[ICMP_MAX_PACKETLEN];
+	ssize_t	recv_bytes;
+}	t_reply;
 
 typedef struct s_timer
 {
@@ -80,6 +87,7 @@ int				setup_socket(t_ping *ping);
 
 void			ping_routine(t_ping *ping);
 
+void			receive_echo_reply(t_ping *ping, t_reply *reply);
 void			send_echo_request(t_ping *ping);
 unsigned short	checksum(void *header, int size);
 

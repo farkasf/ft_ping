@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 08:46:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 16:13:36 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 17:25:15 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,38 @@ unsigned short	checksum(void *header, int size)
 	return (checksum);
 }
 
-void	receive_echo_reply(t_ping *ping)
+void	receive_echo_reply(t_ping *ping, t_reply *reply)
 {
-	
+	socklen_t			addr_size;
+	struct sockaddr_in	recv_addr;
+ 
+	addr_size = sizeof(recv_addr);
+	reply->recv_bytes = recvfrom(ping->network.socket_fd, reply->recv_data, sizeof(reply->recv_data), 0, (struct sockaddr *)&recv_addr, &addr_size);
+	if (reply->recv_bytes < 0)
+	{
+		dprintf(STDERR_FILENO, "ft_ping: recvfrom failed\n");
+		free_struct(ping);
+		exit(EXIT_FAILURE);
+	}
+	ping->network.packets_received++;
+	dprintf(STDOUT_FILENO, "ft_ping: received an echo reply [%d] from %s\n", ping->network.packets_received, ping->network.host_ip);
 }
 
 void	send_echo_request(t_ping *ping)
 {
-	char			packet[ICMP_PACKETLEN];
+	char			req_packet[ICMP_PACKETLEN];
 	struct icmp		*header;
 	ssize_t			sent_bytes;
 
-	header = (struct icmp *)packet;
+	header = (struct icmp *)req_packet;
 	header->icmp_type = ICMP_ECHO; //ECHO type 8
 	header->icmp_code = 0;
 	header->icmp_id = htons(getpid());
 	ping->network.packets_sent++;
 	header->icmp_seq = htons(ping->network.packets_sent);
-	header->icmp_cksum = checksum(packet, sizeof(packet));
+	header->icmp_cksum = checksum(req_packet, sizeof(req_packet));
 	
-	sent_bytes = sendto(ping->network.socket_fd, &packet, sizeof(packet), 0, (struct sockaddr *)&ping->network.remote_addr, sizeof(ping->network.remote_addr));
+	sent_bytes = sendto(ping->network.socket_fd, &req_packet, sizeof(req_packet), 0, (struct sockaddr *)&ping->network.remote_addr, sizeof(ping->network.remote_addr));
 	if (sent_bytes < 0)
 	{
 		dprintf(STDERR_FILENO, "ft_ping: sendto failed\n");
@@ -60,7 +72,5 @@ void	send_echo_request(t_ping *ping)
 		exit(EXIT_FAILURE);
 	}
 	else
-	{
 		dprintf(STDOUT_FILENO, "ft_ping: sent an echo request [%d] to %s\n", ping->network.packets_sent, ping->network.host_ip);
-	}
 }
