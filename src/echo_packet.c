@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 08:46:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 17:25:15 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 17:55:09 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	send_echo_request(t_ping *ping)
 	struct icmp		*header;
 	ssize_t			sent_bytes;
 
+	memset(&req_packet, 0, sizeof(req_packet));
 	header = (struct icmp *)req_packet;
 	header->icmp_type = ICMP_ECHO; //ECHO type 8
 	header->icmp_code = 0;

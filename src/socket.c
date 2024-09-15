@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:05:47 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 08:48:51 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 17:53:36 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ int resolve_host(char *hostname, struct addrinfo **res)
 {
 	struct addrinfo hints;
 
+	*res = NULL;
 	memset(&hints, 0, sizeof(hints));
+
 	hints.ai_family = AF_INET;
 	hints.ai_socktype = SOCK_RAW;
 	hints.ai_protocol = IPPROTO_ICMP;
@@ -50,7 +52,6 @@ int get_socket_ip(t_ping *ping)
 	if (res->ai_addrlen != sizeof(ping->network.remote_addr))
 	{
 		dprintf(STDERR_FILENO, "ft_ping: address length mismatch\n");
-		freeaddrinfo(res);
 		return (-1);
 	}
 	memcpy(&ping->network.remote_addr, res->ai_addr, res->ai_addrlen);
