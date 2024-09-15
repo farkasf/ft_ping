@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:01 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 08:57:15 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 12:00:02 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int main(int ac, char **av)
 
 	signal(SIGINT, &sig_handler);
 	//gettimeofday(&(ping.timer.begin), NULL);
+	ping.network.packets_sent = 0;
 
 	while (1)
 	{

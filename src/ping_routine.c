@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 08:57:23 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 12:01:10 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	ping_routine(t_ping *ping)
 {
-	printf("%s\n", ping->network.host_ip);
+	printf("resolved: %s\n", ping->network.host_ip);
+	send_echo_request(ping);
+	usleep(1000000);
 	return ; 
 }

@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 08:52:22 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 12:01:59 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,11 @@
 
 typedef struct s_network
 {
-	int				 socket_fd;
-	struct sockaddr_in  remote_addr;
+	int					socket_fd;
+	struct sockaddr_in	remote_addr;
 	char				host_ip[INET_ADDRSTRLEN];
 	char				*hostname;
+	int					packets_sent;
 }	t_network;
 
 typedef struct s_options
@@ -64,19 +65,22 @@ typedef struct s_ping
 	t_timer		timer;
 }	t_ping;
 
-void	print_usage(void);
-void	free_struct(t_ping *ping);
-void	check_uid(void);
+void			print_usage(void);
+void			free_struct(t_ping *ping);
+void			check_uid(void);
 
-char	*ft_strdup(const char *src);
-void	check_option(t_ping *ping, char *flag);
-void	parse_args(t_ping *ping, int ac, char **av);
+char			*ft_strdup(const char *src);
+void			check_option(t_ping *ping, char *flag);
+void			parse_args(t_ping *ping, int ac, char **av);
 
-int		set_packet_lifetime(int socket_fd);
-int		resolve_host(char *hostname, struct addrinfo **res);
-int		get_socket_ip(t_ping *ping);
-int		setup_socket(t_ping *ping);
+int				set_packet_lifetime(int socket_fd);
+int				resolve_host(char *hostname, struct addrinfo **res);
+int				get_socket_ip(t_ping *ping);
+int				setup_socket(t_ping *ping);
 
-void	ping_routine(t_ping *ping);
+void			ping_routine(t_ping *ping);
+
+void			send_echo_request(t_ping *ping);
+unsigned short	checksum(void *header, int size);
 
 #endif
