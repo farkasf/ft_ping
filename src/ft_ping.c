@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:01 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 21:12:56 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 22:48:35 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ping_setup(t_ping *ping)
 	}
 	ping->network.packets_sent = 0;
 	ping->network.packets_received = 0;
+	ping->network.pid = getpid();
 }
 
 int main(int ac, char **av)

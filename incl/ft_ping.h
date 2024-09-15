@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 22:01:37 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 22:49:36 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_network
 	char				*hostname;
 	unsigned int		packets_sent;
 	unsigned int		packets_received;
+	pid_t				pid;
 }	t_network;
 
 typedef struct s_options
@@ -91,7 +92,7 @@ int				get_socket_ip(t_ping *ping);
 int				setup_socket(t_ping *ping);
 
 void			ping_routine(t_ping *ping);
-void			analyze_reply(t_reply *reply);
+void			analyze_reply(t_ping *ping, t_reply *reply);
 
 void			receive_echo_reply(t_ping *ping, t_reply *reply);
 void			send_echo_request(t_ping *ping);

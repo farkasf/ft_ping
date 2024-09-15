@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 08:46:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 22:05:07 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 22:48:57 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	send_echo_request(t_ping *ping)
 	header = (struct icmp *)req_packet;
 	header->icmp_type = ICMP_ECHO; //ECHO type 8
 	header->icmp_code = 0;
-	header->icmp_id = htons(getpid());
+	header->icmp_id = htons(ping->network.pid);
 	ping->network.packets_sent++;
 	header->icmp_seq = htons(ping->network.packets_sent);
 	header->icmp_cksum = checksum(req_packet, sizeof(req_packet));
