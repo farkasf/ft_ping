@@ -6,17 +6,17 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:05:47 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 21:14:12 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 21:34:40 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_ping.h"
 
-int set_packet_lifetime(int socket_fd, int ttl)
+int	set_packet_lifetime(t_ping *ping)
 {
-	if (!ttl)
-		ttl = DEF_TTL;
-	if (setsockopt(socket_fd, IPPROTO_IP, IP_TTL, &ttl, sizeof(ttl)) == -1)
+	if (!ping->options.ttl)
+		ping->options.ttl = DEF_TTL;
+	if (setsockopt(ping->network.socket_fd, IPPROTO_IP, IP_TTL, &ping->options.ttl, sizeof(ping->options.ttl)) == -1)
 		return (-1);
 	return (0);
 }
@@ -75,7 +75,7 @@ int setup_socket(t_ping *ping)
 		return (-1);
 	}
 
-	if (set_packet_lifetime(ping->network.socket_fd, ping->options.ttl) == -1)
+	if (set_packet_lifetime(ping->network.socket_fd) == -1)
 	{
 		dprintf(STDERR_FILENO, "ft_ping: failed to set TTL on the raw socket for ICMP\n");
 		return (-1);
