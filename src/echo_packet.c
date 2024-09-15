@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 08:46:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 12:03:30 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 16:13:36 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,21 @@ unsigned short	checksum(void *header, int size)
 	return (checksum);
 }
 
+void	receive_echo_reply(t_ping *ping)
+{
+	
+}
+
 void	send_echo_request(t_ping *ping)
 {
-	char			packet[ICMP_PACKET];
+	char			packet[ICMP_PACKETLEN];
 	struct icmp		*header;
 	ssize_t			sent_bytes;
 
 	header = (struct icmp *)packet;
-	header->icmp_type = ICMP_ECHO;
+	header->icmp_type = ICMP_ECHO; //ECHO type 8
 	header->icmp_code = 0;
 	header->icmp_id = htons(getpid());
-	//init packets send to 0 at the beginning
 	ping->network.packets_sent++;
 	header->icmp_seq = htons(ping->network.packets_sent);
 	header->icmp_cksum = checksum(packet, sizeof(packet));

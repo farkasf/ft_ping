@@ -8,7 +8,7 @@ SRC =	./src/echo_packet.c \
 OBJS = $(SRC:.c=.o)
 CFLAGS = -Wall -Wextra -Werror
 CC = cc
-INCL =  -I ./incl
+INCL = -I ./incl
 R = rm -rf
 
 all: $(NAME)

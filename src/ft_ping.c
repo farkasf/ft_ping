@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:01 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 12:00:02 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 16:10:34 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	ping_setup(t_ping *ping)
 		free_struct(ping);
 		exit(EXIT_FAILURE);
 	}
+	ping->network.packets_sent = 0;
 }
 
 int main(int ac, char **av)
@@ -39,13 +40,10 @@ int main(int ac, char **av)
 	ping_setup(&ping);
 
 	signal(SIGINT, &sig_handler);
-	//gettimeofday(&(ping.timer.begin), NULL);
-	ping.network.packets_sent = 0;
 
 	while (1)
 	{
 		ping_routine(&ping);
-		//wait a bit
 		if (g_sig_status == 0)
 			break ;
 	}

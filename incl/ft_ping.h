@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 12:01:59 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 16:08:45 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@
 # include <netinet/ip_icmp.h>
 
 # define DEF_TTL 64
-# define IP_HDR
-# define ICMP_HDR 8
-# define ICMP_DATA 56
-# define ICMP_PACKET (ICMP_HDR+ICMP_DATA)
-# define ICMP_MAX_PACKET (1500 - IP_HDR - ICMP_HDR)
+# define IP_HDRLEN 20
+# define ICMP_HDRLEN 8
+# define ICMP_DATALEN 56
+# define ICMP_PACKETLEN (ICMP_HDRLEN+ICMP_DATALEN)
+# define ICMP_MAX_PACKETLEN (1500 - IP_HDRLEN - ICMP_HDRLEN)
 
 typedef struct s_network
 {
