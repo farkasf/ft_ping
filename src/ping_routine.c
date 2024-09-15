@@ -6,13 +6,13 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 21:24:19 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 21:26:45 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_ping.h"
 
-void	analyze_reply(t_ping *ping, t_reply *reply)
+void	analyze_reply(t_reply *reply)
 {
 	struct iphdr	*ip_hdr;
 	struct icmphdr	*icmp_hdr;
@@ -40,7 +40,7 @@ void	ping_routine(t_ping *ping)
 
 	send_echo_request(ping);
 	receive_echo_reply(ping, &echo_reply);
-	analyze_reply(ping, &echo_reply);
+	analyze_reply(&echo_reply);
 	
 	if (echo_reply.success != 1)
 	{
