@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 22:49:36 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 23:47:22 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_reply
 	int				type;
 	int				success;
 	uint16_t		sequence;
+	double			rrt;
 }	t_reply;
 
 typedef struct s_timer
@@ -93,6 +94,7 @@ int				setup_socket(t_ping *ping);
 
 void			ping_routine(t_ping *ping);
 void			analyze_reply(t_ping *ping, t_reply *reply);
+void			calculate_rrt(t_ping *ping, t_reply *reply);
 
 void			receive_echo_reply(t_ping *ping, t_reply *reply);
 void			send_echo_request(t_ping *ping);

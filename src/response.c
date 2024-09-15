@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 20:51:44 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 21:49:34 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 23:52:16 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ void	print_ping_response(t_ping *ping, t_reply *reply)
 	int	bytes;
 
 	bytes = reply->recv_bytes - IP_HDRLEN;
-	dprintf(STDOUT_FILENO, "%d bytes from %s: icmp_seq=%d ttl=%d time=?ms\n", bytes, ping->network.host_ip, reply->sequence, ping->options.ttl);
+	dprintf(STDOUT_FILENO, "%d bytes from %s: icmp_seq=%d ttl=%d time=%.3f ms\n", bytes, ping->network.host_ip, reply->sequence, ping->options.ttl, reply->rrt);
 }

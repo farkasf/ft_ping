@@ -6,11 +6,22 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 22:49:54 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 23:49:26 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_ping.h"
+
+void	calculate_rrt(t_ping *ping, t_reply *reply)
+{
+	double	seconds;
+	double	useconds;
+
+	seconds = ping->timer.rtt_finish.tv_sec - ping->timer.rtt_start.tv_sec;
+	useconds = ping->timer.rtt_finish.tv_usec - ping->timer.rtt_start.tv_usec;
+	
+	reply->rrt = seconds * 1000 + useconds / 1000;
+}
 
 void	analyze_reply(t_ping *ping, t_reply *reply)
 {
@@ -43,10 +54,10 @@ void	ping_routine(t_ping *ping)
 	send_echo_request(ping);
 	receive_echo_reply(ping, &echo_reply);
 	analyze_reply(ping, &echo_reply);
+	calculate_rrt(ping, &echo_reply);
 
 	if (echo_reply.success == 1)
 	{
-		dprintf(STDOUT_FILENO, "successfully exchanged echo\n");
 		print_ping_response(ping, &echo_reply);
 	}
 	else if (echo_reply.success == -1)

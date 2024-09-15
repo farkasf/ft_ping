@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:01 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 22:48:35 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 23:42:20 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int main(int ac, char **av)
 
 	signal(SIGINT, &sig_handler);
 	print_ping_header(&ping);
+	gettimeofday(&(ping.timer.begin), NULL);
 
 	while (1)
 	{

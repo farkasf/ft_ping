@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 08:46:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 22:48:57 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 23:44:20 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	receive_echo_reply(t_ping *ping, t_reply *reply)
 		free_struct(ping);
 		exit(EXIT_FAILURE);
 	}
+	gettimeofday(&(ping->timer.rtt_finish), NULL);
 	ping->network.packets_received++;
 }
 
@@ -65,6 +66,7 @@ void	send_echo_request(t_ping *ping)
 	header->icmp_seq = htons(ping->network.packets_sent);
 	header->icmp_cksum = checksum(req_packet, sizeof(req_packet));
 	
+	gettimeofday(&(ping->timer.rtt_start), NULL);
 	sent_bytes = sendto(ping->network.socket_fd, &req_packet, sizeof(req_packet), 0, (struct sockaddr *)&ping->network.remote_addr, sizeof(ping->network.remote_addr));
 	if (sent_bytes < 0)
 	{
