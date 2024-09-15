@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 16:54:28 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 18:35:35 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,9 @@ typedef struct s_options
 
 typedef struct s_reply
 {
-	char	recv_data[ICMP_MAX_PACKETLEN];
-	ssize_t	recv_bytes;
+	char			recv_data[ICMP_MAX_PACKETLEN];
+	ssize_t			recv_bytes;
+	unsigned int	success;
 }	t_reply;
 
 typedef struct s_timer

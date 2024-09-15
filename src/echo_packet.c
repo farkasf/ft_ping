@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 08:46:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 17:55:09 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/15 18:33:42 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,12 @@ void	receive_echo_reply(t_ping *ping, t_reply *reply)
 	reply->recv_bytes = recvfrom(ping->network.socket_fd, reply->recv_data, sizeof(reply->recv_data), 0, (struct sockaddr *)&recv_addr, &addr_size);
 	if (reply->recv_bytes < 0)
 	{
+		//add a sequence for verbose error output
 		dprintf(STDERR_FILENO, "ft_ping: recvfrom failed\n");
 		free_struct(ping);
 		exit(EXIT_FAILURE);
 	}
-	ping->network.packets_received++;
-	dprintf(STDOUT_FILENO, "ft_ping: received an echo reply [%d] from %s\n", ping->network.packets_received, ping->network.host_ip);
-}
+	ping->network.packets_received++;}
 
 void	send_echo_request(t_ping *ping)
 {
@@ -72,6 +71,4 @@ void	send_echo_request(t_ping *ping)
 		free_struct(ping);
 		exit(EXIT_FAILURE);
 	}
-	else
-		dprintf(STDOUT_FILENO, "ft_ping: sent an echo request [%d] to %s\n", ping->network.packets_sent, ping->network.host_ip);
 }
