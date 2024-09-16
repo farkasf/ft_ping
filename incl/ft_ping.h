@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 20:46:40 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/16 21:08:07 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,10 @@ typedef struct s_reply
 typedef struct s_timer
 {
 	struct timeval	begin;
+	struct timeval	end;
 	struct timeval	rtt_start;
 	struct timeval	rtt_finish;
+	long			elapsed_time;
 }	t_timer;
 
 typedef struct s_stats

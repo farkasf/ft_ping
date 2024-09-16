@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:05:47 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 14:56:12 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/16 20:56:10 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int get_socket_ip(t_ping *ping)
 
 	if (resolve_host(ping->network.hostname, &res) == -1)
 	{
-		dprintf(STDERR_FILENO, "ft_ping: name or service not known\n");
+		dprintf(STDERR_FILENO, "ft_ping: unknown host\n");
 		return (-1);
 	}
 
