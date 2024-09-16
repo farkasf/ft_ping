@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:04:31 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 08:51:11 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/16 14:54:38 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void check_option(t_ping *ping, char *flag)
 			ping->options.help = 1;
 		else
 		{
-			dprintf(STDERR_FILENO, "ft_ping: unknown option -- '%c'\n", flag[i]);
+			dprintf(STDERR_FILENO, "ft_ping: invalid option -- '%c'\n", flag[i]);
+			dprintf(STDERR_FILENO, "Try './ft_ping -?' for more information.\n");
 			free_struct(ping);
 			exit(EXIT_FAILURE);
 		}
@@ -70,23 +71,20 @@ void parse_args(t_ping *ping, int ac, char **av)
 		else
 		{
 			if (ping->network.hostname != NULL)
-			{
-				dprintf(STDERR_FILENO, "ft_ping: multiple destination addresses\n");
-				free_struct(ping);
-				exit(EXIT_FAILURE);
-			}
+				continue ;
 			ping->network.hostname = ft_strdup(av[i]);
 		}
 		i++;
 	}
 	if (ping->options.help == 1)
 	{
-		free_struct(ping);
 		print_usage();
+		free_struct(ping);
 	}
 	if (ping->network.hostname == NULL || strlen(ping->network.hostname) == 0)
 	{
-		dprintf(STDERR_FILENO, "ft_ping: destination address required\n");   
+		dprintf(STDERR_FILENO, "ft_ping: missing host operand\n");
+		dprintf(STDERR_FILENO, "Try './ft_ping -?' for more information.\n");
 		free_struct(ping);
 		exit(EXIT_FAILURE);
 	}

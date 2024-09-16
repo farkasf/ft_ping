@@ -6,11 +6,20 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 23:49:26 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/16 15:51:25 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_ping.h"
+
+void	update_stats(t_ping *ping, t_reply *reply)
+{
+	if (reply->rrt < ping->stats.min_t || ping->stats.min_t == 0)
+		ping->stats.min_t = reply->rrt;
+	else if (reply->rrt > ping->stats.max_t)
+		ping->stats.max_t = reply->rrt;
+	ping->stats.total_t += reply->rrt;
+}
 
 void	calculate_rrt(t_ping *ping, t_reply *reply)
 {
@@ -55,6 +64,7 @@ void	ping_routine(t_ping *ping)
 	receive_echo_reply(ping, &echo_reply);
 	analyze_reply(ping, &echo_reply);
 	calculate_rrt(ping, &echo_reply);
+	update_stats(ping, &echo_reply);
 
 	if (echo_reply.success == 1)
 	{

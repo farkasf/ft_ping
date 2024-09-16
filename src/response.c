@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 20:51:44 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 23:52:16 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/16 16:03:57 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,19 @@ void	print_ping_response(t_ping *ping, t_reply *reply)
 
 	bytes = reply->recv_bytes - IP_HDRLEN;
 	dprintf(STDOUT_FILENO, "%d bytes from %s: icmp_seq=%d ttl=%d time=%.3f ms\n", bytes, ping->network.host_ip, reply->sequence, ping->options.ttl, reply->rrt);
+}
+
+void	print_ping_stats(t_ping *ping)
+{
+	double	packet_loss;
+	double	avg_t;
+	
+	avg_t = ping->stats.total_t / ping->network.packets_sent;
+	packet_loss = 1 - (ping->network.packets_received / ping->network.packets_sent);
+	dprintf(STDOUT_FILENO, "--- %s ping statistics ---\n", ping->network.hostname);
+	dprintf(STDOUT_FILENO, "%d packets transmitted, ", ping->network.packets_sent);
+	dprintf(STDOUT_FILENO, "%d packets received ", ping->network.packets_received);
+	dprintf(STDOUT_FILENO, "%.0f packet loss\n", packet_loss * 100);
+	
+	dprintf(STDOUT_FILENO, "rount-trip min/avg/max/stddev = %.3f/%.3f/%.3f/nope", ping->stats.min_t, avg_t, ping->stats.max_t);
 }

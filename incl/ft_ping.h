@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/15 23:47:22 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/16 16:03:28 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <string.h>
 
+# include <sys/time.h>
 # include <errno.h>
 # include <signal.h>
 
@@ -72,11 +73,19 @@ typedef struct s_timer
 	struct timeval	rtt_finish;
 }	t_timer;
 
+typedef struct s_stats
+{
+	double	min_t;
+	double	max_t;
+	double	total_t;
+}	t_stats;
+
 typedef struct s_ping
 {
 	t_options	options;
 	t_network	network;
 	t_timer		timer;
+	t_stats		stats;
 }	t_ping;
 
 void			print_usage(void);
@@ -95,6 +104,7 @@ int				setup_socket(t_ping *ping);
 void			ping_routine(t_ping *ping);
 void			analyze_reply(t_ping *ping, t_reply *reply);
 void			calculate_rrt(t_ping *ping, t_reply *reply);
+void			update_stats(t_ping *ping, t_reply *reply);
 
 void			receive_echo_reply(t_ping *ping, t_reply *reply);
 void			send_echo_request(t_ping *ping);
