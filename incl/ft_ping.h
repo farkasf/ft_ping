@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 23:36:16 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/16 23:51:06 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,6 @@ void			print_ping_header(t_ping *ping);
 void			print_ping_response(t_ping *ping, t_reply *reply);
 void			print_ping_stats(t_ping *ping);
 
-void			print_icmp_error(t_reply *reply);
+char			*fetch_icmp_error(t_reply *reply);
 
 #endif

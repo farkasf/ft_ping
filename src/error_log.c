@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:07:03 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 23:34:16 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/16 23:50:48 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static const t_icmp_error	responses[] = {
 	{ ICMP_TIMESTAMPREPLY, 0, "Timestamp Reply" }
 };
 
-void	print_icmp_error(t_reply *reply)
+char	*fetch_icmp_error(t_reply *reply)
 {
 	size_t	i;
 
@@ -48,7 +48,7 @@ void	print_icmp_error(t_reply *reply)
 	while (i < (sizeof(responses) / sizeof(responses[0])))
 	{
 		if (responses[i].type == reply->type && responses[i].code == reply->code)
-			dprintf(STDOUT_FILENO, "%s\n", responses[i].message);
+			return (responses[i].err_msg);
 		i++;
 	}
 }
