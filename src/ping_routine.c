@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 23:42:25 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/17 00:05:17 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ void	analyze_reply(t_ping *ping, t_reply *reply)
 	icmp_hdr = (struct icmphdr*)(reply->recv_data + (ip_hdr->ihl * 4));
 	
 	if (icmp_hdr->type == ICMP_ECHOREPLY && ntohs(icmp_hdr->un.echo.id) == ping->network.pid)
+	{
 		reply->success = 1;
+		ping->network.packets_received++;	
+	}
 	else
 	{
 		if (icmp_hdr->type != ICMP_ECHO)

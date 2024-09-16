@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 08:46:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 12:26:26 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/17 00:04:28 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	receive_echo_reply(t_ping *ping, t_reply *reply)
 		exit(EXIT_FAILURE);
 	}
 	gettimeofday(&(ping->timer.rtt_finish), NULL);
-	ping->network.packets_received++;
 }
 
 void	send_echo_request(t_ping *ping)
