@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:06:25 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 14:55:31 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/16 20:46:07 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@ void	print_usage(void)
 	dprintf(STDOUT_FILENO, "  -?      gives this help list\n");
 	dprintf(STDOUT_FILENO, "  -v      verbose output\n");
 	exit(EXIT_SUCCESS);
+}
+
+double	newton_sqrt(double num)
+{
+	double	guess;
+	double	epsilon;
+
+	guess = num / 2.0;
+	epsilon = 0.0001;
+	while ((guess * guess - num > epsilon) || (num - guess * guess > epsilon))
+		guess = (guess + num / guess) / 2.0;
+	return (guess);
 }
 
 void	free_struct(t_ping *ping)

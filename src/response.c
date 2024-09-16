@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 20:51:44 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 20:32:11 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/16 20:46:46 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,5 @@ void	print_ping_stats(t_ping *ping)
 
 	if (packet_loss != 1)
 		dprintf(STDOUT_FILENO, "rount-trip min/avg/max/stddev = %.3f/%.3f/%.3f/%.3f ms\n", 
-			ping->stats.min_t, avg_t, ping->stats.max_t, sqrt(variance));
+			ping->stats.min_t, avg_t, ping->stats.max_t, newton_sqrt(variance));
 }

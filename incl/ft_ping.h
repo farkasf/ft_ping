@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 20:27:24 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/16 20:46:40 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# include <math.h>
 
 # include <sys/time.h>
 # include <errno.h>
@@ -93,6 +92,7 @@ typedef struct s_ping
 void			print_usage(void);
 void			free_struct(t_ping *ping);
 void			check_uid(void);
+double			newton_sqrt(double num);
 
 char			*ft_strdup(const char *src);
 void			check_option(t_ping *ping, char *flag);
