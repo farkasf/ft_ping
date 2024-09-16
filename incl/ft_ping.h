@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 16:03:28 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/16 17:09:55 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,6 @@ unsigned short	checksum(void *header, int size);
 
 void			print_ping_header(t_ping *ping);
 void			print_ping_response(t_ping *ping, t_reply *reply);
+void			print_ping_stats(t_ping *ping);
 
 #endif

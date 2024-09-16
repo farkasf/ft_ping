@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:01 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 16:03:38 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/16 17:10:04 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int main(int ac, char **av)
 			break ;
 	}
 
-	//print the log
+	print_ping_stats(&ping);
 
 	free_struct(&ping);
 	exit(EXIT_SUCCESS);
