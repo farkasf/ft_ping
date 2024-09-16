@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 20:51:44 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 23:59:46 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/17 00:50:26 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 void	print_ping_header(t_ping *ping)
 {
-	dprintf(STDOUT_FILENO, "PING %s (%s): %d data bytes\n", ping->network.hostname, ping->network.host_ip, ICMP_DATALEN);
+	dprintf(STDOUT_FILENO, "PING %s (%s): %d data bytes", ping->network.hostname, ping->network.host_ip, ICMP_DATALEN);
+	if (ping->options.verbose)
+		dprintf(STDOUT_FILENO, ", id 0x%04x = %d", (unsigned int)ping->network.pid, (int)ping->network.pid);
+	dprintf(STDOUT_FILENO, "\n");
 }
 
 void	print_ping_response(t_ping *ping, t_reply *reply)
