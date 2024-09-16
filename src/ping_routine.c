@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 16:10:59 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/16 20:22:25 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void	update_stats(t_ping *ping, t_reply *reply)
 		ping->stats.min_t = reply->rrt;
 	else if (reply->rrt > ping->stats.max_t)
 		ping->stats.max_t = reply->rrt;
+
 	ping->stats.total_t += reply->rrt;
+	ping->stats.total_t_sq += reply->rrt * reply->rrt;
 }
 
 void	calculate_rrt(t_ping *ping, t_reply *reply)

@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 17:09:55 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/16 20:27:24 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <math.h>
 
 # include <sys/time.h>
 # include <errno.h>
@@ -78,6 +79,7 @@ typedef struct s_stats
 	double	min_t;
 	double	max_t;
 	double	total_t;
+	double	total_t_sq;
 }	t_stats;
 
 typedef struct s_ping
