@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 21:18:37 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/16 23:42:25 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	analyze_reply(t_ping *ping, t_reply *reply)
 	{
 		if (icmp_hdr->type != ICMP_ECHO)
 			reply->success = -1;
-		reply->code = icmp_hdr->code;
 		reply->type = icmp_hdr->type;
+		reply->code = icmp_hdr->code;
 	}
 
 	reply->sequence = ntohs(icmp_hdr->un.echo.sequence);
@@ -70,17 +70,16 @@ void	ping_routine(t_ping *ping)
 	calculate_rrt(ping, &echo_reply);
 	update_stats(ping, &echo_reply);
 
-	if (echo_reply.success == 1)
-	{
-		print_ping_response(ping, &echo_reply);
-	}
-	else if (echo_reply.success == -1)
+	if (echo_reply.success == 0)
+		return;
+	
+	print_ping_response(ping, &echo_reply);
+	
+	if (echo_reply.success == -1)
 	{
 		dprintf(STDOUT_FILENO, "data transfer error\n");
 		//a place for verbose error output
 	}
-	else
-		return ;
 
 	gettimeofday(&(ping->timer.end), NULL);
 	ping->timer.elapsed_time = (ping->timer.end.tv_sec - ping->timer.begin.tv_sec) * 1000000 + (ping->timer.end.tv_usec - ping->timer.begin.tv_usec);

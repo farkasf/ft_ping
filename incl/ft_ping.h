@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 21:08:07 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/16 23:36:16 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ typedef struct s_reply
 {
 	char			recv_data[ICMP_MAX_PACKETLEN];
 	ssize_t			recv_bytes;
-	int				code;
 	int				type;
+	int				code;
 	int				success;
 	uint16_t		sequence;
 	double			rrt;
@@ -82,6 +82,13 @@ typedef struct s_stats
 	double	total_t;
 	double	total_t_sq;
 }	t_stats;
+
+typedef struct s_icmp_error
+{
+	int		type;
+	int		code;
+	char	*err_msg;
+}	t_icmp_error;
 
 typedef struct s_ping
 {
@@ -117,5 +124,7 @@ unsigned short	checksum(void *header, int size);
 void			print_ping_header(t_ping *ping);
 void			print_ping_response(t_ping *ping, t_reply *reply);
 void			print_ping_stats(t_ping *ping);
+
+void			print_icmp_error(t_reply *reply);
 
 #endif

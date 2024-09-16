@@ -1,5 +1,6 @@
 NAME = ft_ping
 SRC =	./src/echo_packet.c \
+		./src/error_loc.c \
 		./src/ft_ping.c \
 		./src/parser.c \
 		./src/ping_routine.c \
