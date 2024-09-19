@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/19 04:19:43 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/19 04:27:51 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	analyze_reply(t_ping *ping, t_reply *reply)
 	if (icmp_hdr->type == ICMP_ECHO)
 		return ;
 	
-	ping->network.packets_sent++;
 	if (icmp_hdr->type == ICMP_ECHOREPLY && ntohs(icmp_hdr->un.echo.id) == ping->network.pid)
 	{
 		reply->success = 1;
@@ -53,11 +52,13 @@ void	analyze_reply(t_ping *ping, t_reply *reply)
 	}
 	else
 	{
+		
 		reply->success = -1;
 		reply->type = icmp_hdr->type;
 		reply->code = icmp_hdr->code;
 	}
 
+	ping->network.packets_sent++;
 	reply->sequence = ntohs(icmp_hdr->un.echo.sequence);
 }
 
@@ -73,12 +74,12 @@ void	ping_routine(t_ping *ping)
 	send_echo_request(ping);
 	receive_echo_reply(ping, &echo_reply);
 	analyze_reply(ping, &echo_reply);
-	calculate_rrt(ping, &echo_reply);
-	update_stats(ping, &echo_reply);
 
 	if (echo_reply.success == 0)
 		return;
 	
+	calculate_rrt(ping, &echo_reply);
+	update_stats(ping, &echo_reply);
 	print_ping_response(ping, &echo_reply);
 	
 	if (echo_reply.success == -1)
