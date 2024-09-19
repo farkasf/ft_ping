@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/19 04:17:57 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/19 04:33:52 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_reply
 {
 	char			recv_data[ICMP_MAX_PACKETLEN];
 	ssize_t			recv_bytes;
+	int				recv_ttl;
 	int				type;
 	int				code;
 	int				success;

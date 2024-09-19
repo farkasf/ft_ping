@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/19 04:27:51 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/19 04:34:27 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	analyze_reply(t_ping *ping, t_reply *reply)
 	}
 
 	ping->network.packets_sent++;
+	reply->recv_ttl = ip_hdr->ttl;
 	reply->sequence = ntohs(icmp_hdr->un.echo.sequence);
 }
 
