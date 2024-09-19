@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/19 03:56:36 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/19 04:01:02 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,6 @@ void	analyze_reply(t_ping *ping, t_reply *reply)
 	}
 	else
 	{
-		if (icmp_hdr->type != ICMP_ECHO)
-		{
-			ping->network.packets_sent--;
-			return ;
-		}
 		reply->success = -1;
 		reply->type = icmp_hdr->type;
 		reply->code = icmp_hdr->code;

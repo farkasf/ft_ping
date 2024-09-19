@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 23:55:38 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/19 04:15:49 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_network
 	struct sockaddr_in	remote_addr;
 	char				host_ip[INET_ADDRSTRLEN];
 	char				*hostname;
-	unsigned int		packets_sent;
+	unsigned int		sequence;
 	unsigned int		packets_received;
 	pid_t				pid;
 }	t_network;

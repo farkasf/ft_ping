@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 08:46:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/18 09:22:54 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/19 04:15:57 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	send_echo_request(t_ping *ping)
 	header->icmp_type = ICMP_ECHO; //ECHO type 8
 	header->icmp_code = 0;
 	header->icmp_id = htons(ping->network.pid);
-	header->icmp_seq = htons(ping->network.packets_sent);
-	ping->network.packets_sent++;
+	header->icmp_seq = htons(ping->network.sequence);
+	ping->network.sequence++;
 	header->icmp_cksum = checksum(req_packet, sizeof(req_packet));
 	
 	gettimeofday(&(ping->timer.rtt_start), NULL);
