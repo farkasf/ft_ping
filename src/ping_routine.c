@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/20 11:27:26 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/20 12:38:45 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,7 @@ void	ping_routine(t_ping *ping)
 	
 	if (echo_reply.success == -1 && ping->options.verbose == 1)
 	{
-		dprintf(STDOUT_FILENO, "data transfer error\n");
 		print_detailed_err_log(ping, &echo_reply);
-		//a place for verbose error output
 	}
 
 	gettimeofday(&(ping->timer.end), NULL);

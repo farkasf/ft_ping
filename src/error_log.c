@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:07:03 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/20 11:31:55 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/20 12:38:26 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,22 @@ void	fetch_icmp_error(t_reply *reply)
 
 void	print_detailed_err_log(t_ping *ping, t_reply *reply)
 {
-	char	*dump;
 	size_t	i;
 
-	dump = reply->ip_dump;
 	i = 0;
 	dprintf(STDOUT_FILENO, "IP Hdr Dump:\n");
 	while (i < IP_HDRLEN)
 	{
-		dprintf(STDOUT_FILENO, " %02x%02x", dump[i], dump[i + 1]);
+		dprintf(STDOUT_FILENO, " %02x%02x", ((char *)reply->ip_dump)[i], ((char *)reply->ip_dump)[i + 1]);
 		i += 2;
 	}
-	dprintf(STDOUT_FILENO, "ICMP: type 8, code 0, size %d, id 0x%04x, seq 0x%04x\n", ICMP_PACKETLEN, (unsigned int)ping->network.pid, ping->network.packets_sent);
+	inet_ntop(AF_INET, &reply->ip_dump->daddr, reply->ip_dest, sizeof(reply->ip_dest));
+	inet_ntop(AF_INET, &reply->ip_dump->saddr, reply->ip_src, sizeof(reply->ip_src));
+	dprintf(STDOUT_FILENO, "\nVr HL TOS  Len   ID Flg  off TTL Pro  cks      \tSrc\t\tDst     Data\n");
+	dprintf(STDOUT_FILENO," %x  %x  %02x %04x %04x   %x %04x  %02x  %02x %04x %s  %s\n", 
+		reply->ip_dump->version, reply->ip_dump->ihl, reply->ip_dump->tos, ntohs(reply->ip_dump->tot_len), ntohs(reply->ip_dump->id), 
+		ntohs(reply->ip_dump->frag_off) >> 13, ntohs(reply->ip_dump->frag_off) & 0x1FFF, reply->ip_dump->ttl, reply->ip_dump->protocol, 
+		ntohs(reply->ip_dump->check), reply->ip_src, reply->ip_dest);
+	dprintf(STDOUT_FILENO, "ICMP: type 8, code 0, size %d, id 0x%04x, seq 0x%04x\n", 
+		ICMP_PACKETLEN, (unsigned int)ping->network.pid, ping->network.packets_sent - 1);
 }

@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/20 11:10:44 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/20 12:09:32 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ typedef struct s_reply
 {
 	struct iphdr	*ip_dump;
 	char			recv_data[ICMP_MAX_PACKETLEN];
+	char			ip_dest[INET_ADDRSTRLEN];
+	char			ip_src[INET_ADDRSTRLEN];
 	ssize_t			recv_bytes;
 	int				recv_ttl;
 	int				type;
