@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 20:51:44 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/19 04:34:38 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/20 10:50:34 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	print_ping_response(t_ping *ping, t_reply *reply)
 		dprintf(STDOUT_FILENO, "%d bytes from %s (%s): ", bytes, ping->network.hostname, ping->network.host_ip);
 		fetch_icmp_error(reply);
 	}
-
 }
 
 void	print_ping_stats(t_ping *ping)

@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:07:03 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/17 00:08:02 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/20 11:31:55 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,3 +56,18 @@ void	fetch_icmp_error(t_reply *reply)
 	}
 }
 
+void	print_detailed_err_log(t_ping *ping, t_reply *reply)
+{
+	char	*dump;
+	size_t	i;
+
+	dump = reply->ip_dump;
+	i = 0;
+	dprintf(STDOUT_FILENO, "IP Hdr Dump:\n");
+	while (i < IP_HDRLEN)
+	{
+		dprintf(STDOUT_FILENO, " %02x%02x", dump[i], dump[i + 1]);
+		i += 2;
+	}
+	dprintf(STDOUT_FILENO, "ICMP: type 8, code 0, size %d, id 0x%04x, seq 0x%04x\n", ICMP_PACKETLEN, (unsigned int)ping->network.pid, ping->network.packets_sent);
+}
