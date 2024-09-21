@@ -1,4 +1,5 @@
 NAME = ft_ping
+LIBFT = ./libft/libft.a
 SRC =	./src/echo_packet.c \
 		./src/error_log.c \
 		./src/ft_ping.c \
@@ -16,15 +17,18 @@ R = rm -rf
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	make all -C ./libft
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@ $(INCL)
 
 clean:
 	$(R) $(OBJS)
+	${MAKE} clean -C ./libft
 
 fclean: clean
 	$(R) $(NAME)
+	${MAKE} fclean -C ./libft
 
 re: fclean all

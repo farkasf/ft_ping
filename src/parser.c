@@ -6,31 +6,11 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:04:31 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 14:54:38 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/21 22:05:17 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_ping.h"
-
-char	*ft_strdup(const char *src)
-{
-	char	*dst;
-	int		i;
-	int		src_l;
-
-	i = 0;
-	src_l = strlen(src);
-	dst = (char *)malloc((src_l + 1) * sizeof(char));
-	if (dst == 0)
-		return (NULL);
-	while (i < src_l)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
-}
 
 void check_option(t_ping *ping, char *flag)
 {
