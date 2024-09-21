@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:07:03 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/20 16:06:00 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/21 21:41:54 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	fetch_icmp_error(t_reply *reply)
 		if (responses[i].type == reply->type && responses[i].code == reply->code)
 		{
 			dprintf(STDOUT_FILENO, "%s\n", responses[i].err_msg);
-			return ;	
+			return ;
 		}
 		i++;
 	}
@@ -60,6 +60,7 @@ void	print_detailed_err_log(t_ping *ping, t_reply *reply)
 {
 	size_t			i;
 
+	i = 0;
 	dprintf(STDOUT_FILENO, "IP Hdr Dump:\n");
 	while (i < IP_HDRLEN)
 	{
@@ -68,7 +69,7 @@ void	print_detailed_err_log(t_ping *ping, t_reply *reply)
 	}
 	dprintf(STDOUT_FILENO, "\nVr HL TOS  Len   ID Flg  off TTL Pro  cks      Src\tDst\tData\n");
 	dprintf(STDOUT_FILENO," %1x  %1x  %02x %04x %04x   %1x %04x  %02x  %02x %04x %s  %s \n", 
-		reply->ip_dump->version, reply->ip_dump->ihl, reply->ip_dump->tos, htons(reply->ip_dump->tot_len, ntohs(reply->ip_dump->id), 
+		reply->ip_dump->version, reply->ip_dump->ihl, reply->ip_dump->tos, htons(reply->ip_dump->tot_len), ntohs(reply->ip_dump->id), 
 		(ntohs(reply->ip_dump->frag_off) & 0xe000) >> 13, ntohs(reply->ip_dump->frag_off) & 0x1FFF, reply->ip_dump->ttl, reply->ip_dump->protocol, 
 		ntohs(reply->ip_dump->check), inet_ntoa(*((struct in_addr *) &reply->ip_dump->daddr)), ping->network.host_ip);
 	dprintf(STDOUT_FILENO, "ICMP: type 8, code 0, size %d, id 0x%04x, seq 0x%04x\n", 
