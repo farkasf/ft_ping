@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:07:03 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/21 21:41:54 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/21 21:51:07 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	print_detailed_err_log(t_ping *ping, t_reply *reply)
 	size_t			i;
 
 	i = 0;
+	reply->ip_dump->tot_len = htons(ntohs(reply->ip_dump->tot_len) - ICMP_HDRLEN - IP_HDRLEN);
 	dprintf(STDOUT_FILENO, "IP Hdr Dump:\n");
 	while (i < IP_HDRLEN)
 	{
