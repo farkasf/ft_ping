@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:01 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/19 04:18:54 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/30 04:07:25 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int main(int ac, char **av)
 	t_ping  ping;
 
 	check_uid();
-	memset(&ping, 0, sizeof(t_ping));
+	ft_memset(&ping, 0, sizeof(t_ping));
 	parse_args(&ping, ac, av);
 	ping_setup(&ping);
 

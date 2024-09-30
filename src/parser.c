@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:04:31 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/21 22:05:17 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/30 04:08:38 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,3 +69,19 @@ void parse_args(t_ping *ping, int ac, char **av)
 		exit(EXIT_FAILURE);
 	}
 }
+
+/*
+ERRORS
+acceptable "ping google.com --ttl 5" OR "ping google.com --ttl=5" OR "ping google.com --ttl='5'"
+invalid:
+└─$ ping google.com --ttl=x      
+ping: invalid value (`x' near `x')
+ping google.com --ttl a b
+ping: invalid value (`a' near `a')
+ping google.com -v --ttl=-5
+ping: option value too big: -5
+ping google.com -v --ttl=0 
+ping: option value too small: 0
+ ping google.com -v --ttl=84094809328409328490328
+ping: option value too big: 84094809328409328490328
+*/

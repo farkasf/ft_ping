@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:05:47 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/16 20:56:10 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/09/30 04:08:02 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int resolve_host(char *hostname, struct addrinfo **res)
 	struct addrinfo hints;
 
 	*res = NULL;
-	memset(&hints, 0, sizeof(hints));
+	ft_memset(&hints, 0, sizeof(hints));
 
 	hints.ai_family = AF_INET;
 	hints.ai_socktype = SOCK_RAW;
@@ -38,6 +38,7 @@ int resolve_host(char *hostname, struct addrinfo **res)
 	return (0);
 }
 
+//consider implementing custom freeaddrinfo
 int get_socket_ip(t_ping *ping)
 {
 	struct addrinfo *res;
