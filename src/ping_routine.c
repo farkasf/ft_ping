@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/30 04:07:29 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/04 01:53:58 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ void	ping_routine(t_ping *ping)
 	
 	calculate_rrt(ping, &echo_reply);
 	update_stats(ping, &echo_reply);
-	print_ping_response(ping, &echo_reply);
+
+	if (!ping->options.quiet)
+		print_ping_response(ping, &echo_reply);
 	
 	if (echo_reply.success == -1 && ping->options.verbose == 1)
-	{
 		print_detailed_err_log(ping, &echo_reply);
-	}
 
 	gettimeofday(&(ping->timer.end), NULL);
 	ping->timer.elapsed_time = (ping->timer.end.tv_sec - ping->timer.begin.tv_sec) * 1000000 + (ping->timer.end.tv_usec - ping->timer.begin.tv_usec);

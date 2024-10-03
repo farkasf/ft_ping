@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/21 22:02:58 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/04 01:48:14 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <stdbool.h>
 
 # include <sys/time.h>
 # include <errno.h>
@@ -52,9 +53,10 @@ typedef struct s_network
 
 typedef struct s_options
 {
-	unsigned int	help;
-	unsigned int	verbose;
-	int				ttl;
+	bool	help;
+	bool	verbose;
+	bool	quiet;
+	int		ttl;
 }	t_options;
 
 typedef struct s_reply

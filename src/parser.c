@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:04:31 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/30 04:08:38 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/04 01:51:05 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void check_option(t_ping *ping, char *flag)
 			ping->options.verbose = 1;
 		else if (flag[i] == '?')
 			ping->options.help = 1;
+		else if (flag[i] == 'q')
+			ping->options.quiet = 1;
 		else
 		{
 			dprintf(STDERR_FILENO, "ft_ping: invalid option -- '%c'\n", flag[i]);
