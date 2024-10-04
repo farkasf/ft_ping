@@ -37,12 +37,20 @@ void	receive_echo_reply(t_ping *ping, t_reply *reply)
 {
 	socklen_t			addr_size;
 	struct sockaddr_in	recv_addr;
+	struct timeval		timeout;
  
+ 	timeout.tv_sec = 0;
+ 	timeout.tv_usec = 500000;
+ 	setsockopt(ping->network.socket_fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
 	addr_size = sizeof(recv_addr);
 	reply->recv_bytes = recvfrom(ping->network.socket_fd, reply->recv_data, sizeof(reply->recv_data), 0, (struct sockaddr *)&recv_addr, &addr_size);
-	if (reply->recv_bytes < 0)
+	if (reply->recv_bytes == -1)
 	{
-		//add a sequence for verbose error output
+		if (errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK)
+		{
+			reply->socket_timeout = 1;
+			return ;
+		}
 		dprintf(STDERR_FILENO, "ft_ping: recvfrom failed\n");
 		free_struct(ping);
 		exit(EXIT_FAILURE);
@@ -67,7 +75,7 @@ void	send_echo_request(t_ping *ping)
 	
 	gettimeofday(&(ping->timer.rtt_start), NULL);
 	sent_bytes = sendto(ping->network.socket_fd, &req_packet, sizeof(req_packet), 0, (struct sockaddr *)&ping->network.remote_addr, sizeof(ping->network.remote_addr));
-	if (sent_bytes < 0)
+	if (sent_bytes == -1)
 	{
 		dprintf(STDERR_FILENO, "ft_ping: sendto failed\n");
 		free_struct(ping);

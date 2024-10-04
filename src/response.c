@@ -27,7 +27,7 @@ void	print_ping_response(t_ping *ping, t_reply *reply)
 	bytes = reply->recv_bytes - IP_HDRLEN;
 	if (reply->success == 1)
 		dprintf(STDOUT_FILENO, "%d bytes from %s: icmp_seq=%d ttl=%d time=%.3f ms\n", bytes, ping->network.host_ip, reply->sequence, reply->recv_ttl, reply->rrt);
-	else
+	else if (!reply->socket_timeout)
 	{
 		dprintf(STDOUT_FILENO, "%d bytes from %s (%s): ", bytes, ping->network.hostname, ping->network.host_ip);
 		fetch_icmp_error(reply);

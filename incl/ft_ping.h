@@ -70,6 +70,7 @@ typedef struct s_reply
 	int				success;
 	uint16_t		sequence;
 	double			rrt;
+	bool			socket_timeout;
 }	t_reply;
 
 typedef struct s_timer
