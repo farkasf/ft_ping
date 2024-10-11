@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:06:25 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/04 01:48:07 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/11 09:37:35 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ void	print_usage(void)
 {
 	dprintf(STDOUT_FILENO, "Usage: ./ft_ping [OPTION...] HOST ...\n");
 	dprintf(STDOUT_FILENO, "Send ICMP ECHO_REQUEST packets to network hosts.\n\n");
-	dprintf(STDOUT_FILENO, "Options valid for --echo requests:\n\n");
-	dprintf(STDOUT_FILENO, "  -?      gives this help list\n");
-	dprintf(STDOUT_FILENO, "  -v      verbose output\n");
-	dprintf(STDOUT_FILENO, "  -q      quiet output\n");
+	dprintf(STDOUT_FILENO, " Options valid for --echo requests:\n\n");
+	dprintf(STDOUT_FILENO, "  -?           gives this help list\n");
+	dprintf(STDOUT_FILENO, "  -v           verbose output\n");
+	dprintf(STDOUT_FILENO, "  -q           quiet output\n");
+	dprintf(STDOUT_FILENO, "  -c NUMBER    stop after sending NUMBER packets\n");
+	dprintf(STDOUT_FILENO, "  --ttl=N      specify N as time-to-live\n\n");
 	exit(EXIT_SUCCESS);
 }
 
