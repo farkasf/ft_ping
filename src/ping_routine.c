@@ -69,6 +69,7 @@ void	ping_routine(t_ping *ping)
 
 	ft_memset(&echo_reply, 0, sizeof(t_reply));
 	echo_reply.success = 0;
+	echo_reply.socket_timeout = 0;
 
 	gettimeofday(&(ping->timer.begin), NULL);
 
@@ -77,7 +78,7 @@ void	ping_routine(t_ping *ping)
 	analyze_reply(ping, &echo_reply);
 
 	if (echo_reply.success == 0)
-		return;
+		return ;
 	
 	calculate_rrt(ping, &echo_reply);
 	update_stats(ping, &echo_reply);
@@ -85,7 +86,7 @@ void	ping_routine(t_ping *ping)
 	if (!ping->options.quiet)
 		print_ping_response(ping, &echo_reply);
 	
-	if (echo_reply.success == -1 && ping->options.verbose == 1)
+	if (echo_reply.success == -1 && ping->options.verbose == 1 && !echo_reply.socket_timeout)
 		print_detailed_err_log(ping, &echo_reply);
 
 	gettimeofday(&(ping->timer.end), NULL);
