@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/11 09:43:26 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/11 17:58:54 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ typedef struct s_network
 
 typedef struct s_options
 {
-	bool	help;
-	bool	verbose;
-	bool	quiet;
-	int		ttl;
-	int		max_packets;
+	bool				help;
+	bool				verbose;
+	bool				quiet;
+	unsigned int		ttl;
+	unsigned int		max_packets;
 }	t_options;
 
 typedef struct s_reply
