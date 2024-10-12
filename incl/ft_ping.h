@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/12 16:39:30 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 21:07:17 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_options
 	bool				verbose;
 	bool				quiet;
 	bool				flood;
+	bool				set_packet_size;
 	unsigned int		ttl;
 	unsigned int		max_packets;
 	unsigned int		delay;

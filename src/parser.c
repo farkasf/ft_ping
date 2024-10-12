@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:04:31 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/12 18:11:36 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 21:09:08 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,13 @@ unsigned int	check_num(t_ping *ping, char *ptr, size_t max_val, bool zero, char 
 	sign = 1;
 	i = 0;
 
-	if (ptr[i] == '-')
-		sign = -1;
-	if (ptr[i] == '-' || ptr[i] == '+')
-		i++;
+	if (ft_strlen(ptr) > 1)
+	{
+		if (ptr[i] == '-')
+			sign = -1;
+		if (ptr[i] == '-' || ptr[i] == '+')
+			i++;	
+	}
 	while (ptr[i])
 	{
 		if (!ft_isdigit(ptr[i]))
@@ -64,7 +67,7 @@ unsigned int	check_num(t_ping *ping, char *ptr, size_t max_val, bool zero, char 
 		i++;
 	}
 	value *= sign;
-	if ((value == 0 && !zero) || (value <= 1 && mode == 'i'))
+	if ((value == 0 && !zero) || (value < 1 && mode == 'i'))
 	{
 		dprintf(STDERR_FILENO, "ft_ping: option value too small: %s\n", ptr);
 		free_struct(ping);
@@ -141,6 +144,7 @@ void parse_args(t_ping *ping, int ac, char **av)
 			}
 			else if (av[i][1] == 's')
 			{
+				ping->options.set_packet_size = 1;
 				if (ft_strlen(av[i]) != 2)
 					ping->options.data_len = check_num(ping, av[i] + 2, ICMP_MAX_PACKETLEN, 1, 's');
 				else if (av[i + 1])
