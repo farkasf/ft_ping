@@ -16,29 +16,30 @@ R = rm -rf
 
 RED = \033[0;31m
 GREEN = \033[0;32m
-BLUE = \033[0;34m
+BLUE = \033[0;36m
 YELLOW = \033[1;33m
 NC = \033[0m
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@echo "Compiling libft..."
+	@echo "$(BLUE)compiling libft$(NC)"
 	@make all -C ./libft
+	@echo "$(BLUE)linking object files$(NC)"
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
-	@echo "$(GREEN)$(NAME) ready$(NC)"
+	@echo "$(RED)$(NAME) ready$(NC)"
 
 %.o: %.c
-	@echo "$(BLUE)Compiling $<...$(NC)"
+	@echo "$(BLUE)compiling $<$(NC)"
 	$(CC) $(CFLAGS) -c $< -o $@ $(INCL)
 
 clean:
-	@echo "$(YELLOW)Cleaning...$(NC)"
+	@echo "$(YELLOW)clean done.$(NC)"
 	@$(R) $(OBJS)
 	@${MAKE} clean -C ./libft
 
 fclean: clean
-	@echo "$(RED)Full clean done.$(NC)"
+	@echo "$(GREEN)full clean done.$(NC)"
 	@$(R) $(NAME)
 	@${MAKE} fclean -C ./libft
 
