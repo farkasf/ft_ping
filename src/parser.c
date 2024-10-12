@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:04:31 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/12 15:22:51 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 16:42:50 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void check_option(t_ping *ping, char *flag)
 		case 'v':
 			ping->options.verbose = 1;
 			break ;
-		case 'h':
+		case '?':
 			ping->options.help = 1;
 			break ;
 		case 'q':
@@ -134,6 +134,23 @@ void parse_args(t_ping *ping, int ac, char **av)
 				else
 				{
 					dprintf(STDERR_FILENO, "ft_ping: option requires an argument -- 'i'\n");
+					dprintf(STDERR_FILENO, "Try './ft_ping -?' for more information.\n");
+					free_struct(ping);
+					exit(EXIT_FAILURE);
+				}
+			}
+			else if (av[i][1] == 's')
+			{
+				if (ft_strlen(av[i]) != 2)
+					ping->options.data_len = check_num(ping, av[i] + 2, ICMP_MAX_PACKETLEN, 1, 's');
+				else if (av[i + 1])
+				{
+					ping->options.data_len = check_num(ping, av[i + 1], ICMP_MAX_PACKETLEN, 1, 's');
+					i++;
+				}
+				else
+				{
+					dprintf(STDERR_FILENO, "ft_ping: option requires an argument -- 's'\n");
 					dprintf(STDERR_FILENO, "Try './ft_ping -?' for more information.\n");
 					free_struct(ping);
 					exit(EXIT_FAILURE);

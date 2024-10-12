@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:01 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/12 15:23:12 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 16:39:46 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	ping_setup(t_ping *ping)
 
 	if (!ping->options.delay)
 		ping->options.delay = DEF_DELAY;
+	if (!ping->options.data_len)
+		ping->options.data_len = ICMP_DATALEN;
 }
 
 int main(int ac, char **av)
