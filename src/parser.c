@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:04:31 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/12 16:42:50 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 18:11:36 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void parse_args(t_ping *ping, int ac, char **av)
 	{
 		if (!ft_strncmp(av[i], "--ttl", 5))
 		{
-			if (av[i][5] == '=')
+			if (ft_strlen(av[i]) != 6 && ft_strlen(av[i]) != 5)
 				ping->options.ttl = check_num(ping, av[i] + 6, 255, 0, 't');
 			else if (av[i + 1])
 			{
