@@ -58,7 +58,7 @@ run_test "Ping invalid IP #2" "$PING_CMD 256.0.0.1 -c 2" "unknown host"
 
 run_test "Ping valid hostname #1" "$PING_CMD google.com -c 2" "2 packets received"
 run_test "Ping valid hostname #2" "$PING_CMD github.com -c 2" "2 packets received"
-run_test "Verbose ping valid hostname #3" "$PING_CMD intra.42.fr -c 2 -v" "2 packets received"
+run_test "Verbose ping valid hostname #3" "$PING_CMD 42prague.com -c 2 -v" "2 packets received"
 
 run_test "Ping invalid hostname #1" "$PING_CMD invalid_hostname -c 2" "unknown host"
 run_test "Ping invalid hostname #2" "$PING_CMD hashtag#.com -c 2" "unknown host"
@@ -70,10 +70,11 @@ run_test "Verbose ping valid hostname with low TTL #2" "$PING_CMD facebook.com -
 run_test "Quiet ping valid IP" "$PING_CMD 8.8.8.8 -c 2 -q" "0% packet loss"
 
 run_test "Verbose valid IP with 5 packets" "$PING_CMD 1.1.1.1 -c 5 -v" "5 packets received"
-run_test "Ping valid IP with invalid packet value" "$PING_CMD 1.1.1.1 -c fortytwo" "invalid value"
+run_test "Ping valid IP with invalid packet count" "$PING_CMD 1.1.1.1 -c fortytwo" "invalid value"
+run_test "Ping valid IP with empty packet count" "$PING_CMD 1.1.1.1 -c" "requires an argument -- 'c'"
 
 run_test "Ping valid hostname with 3 packets and 2s delay" "$PING_CMD wikipedia.org -c 3 -i 2" "0% packet loss"
-run_test "Ping valid hostname with 3 packets and invalid delay" "$PING_CMD wikipedia.org -c 3 -i -42" "value too small"
+run_test "Ping valid hostname with invalid delay" "$PING_CMD wikipedia.org -c 3 -i -42" "value too small"
 
 run_test "Verbose ping valid hostname with 100 data bytes" "$PING_CMD google.org -c 2 -s 100 -v" "108 bytes from"
 run_test "Ping valid hostname with invalid data bytes" "$PING_CMD google.org -c 2 -s -100" "value too big"
