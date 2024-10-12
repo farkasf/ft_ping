@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:04:31 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/12 21:09:08 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 22:31:33 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ unsigned int	check_num(t_ping *ping, char *ptr, size_t max_val, bool zero, char 
 		i++;
 	}
 	value *= sign;
-	if ((value == 0 && !zero) || (value < 1 && mode == 'i'))
+	if ((value == 0 && !zero) || (ptr[0] == '-' && mode == 'i'))
 	{
 		dprintf(STDERR_FILENO, "ft_ping: option value too small: %s\n", ptr);
 		free_struct(ping);
