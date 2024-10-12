@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:07:03 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/12 17:20:25 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 23:22:03 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static const t_icmp_error	responses[] = {
 	{ ICMP_TIMESTAMPREPLY, 0, "Timestamp Reply" }
 };
 
-void	fetch_icmp_error(t_reply *reply)
+void	fetch_icmp_error(const t_reply *reply)
 {
 	size_t	i;
 

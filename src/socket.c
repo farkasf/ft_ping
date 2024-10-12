@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:05:47 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/11 09:41:32 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 23:28:46 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int get_socket_ip(t_ping *ping)
 		dprintf(STDERR_FILENO, "ft_ping: address length mismatch\n");
 		return (-1);
 	}
-	memcpy(&ping->network.remote_addr, res->ai_addr, res->ai_addrlen);
+	ft_memcpy(&ping->network.remote_addr, res->ai_addr, res->ai_addrlen);
 
 	if (inet_ntop(AF_INET, &ping->network.remote_addr.sin_addr, ping->network.host_ip, INET_ADDRSTRLEN) == NULL)
 	{

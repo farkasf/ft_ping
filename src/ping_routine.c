@@ -6,13 +6,13 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/12 16:32:45 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 23:22:28 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_ping.h"
 
-void	update_stats(t_ping *ping, t_reply *reply)
+void	update_stats(t_ping *ping, const t_reply *reply)
 {
 	if (reply->rrt < ping->stats.min_t || ping->stats.min_t == 0)
 		ping->stats.min_t = reply->rrt;
