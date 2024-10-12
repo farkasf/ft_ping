@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:06:25 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/11 09:37:35 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 15:21:16 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	print_usage(void)
 	dprintf(STDOUT_FILENO, "  -v           verbose output\n");
 	dprintf(STDOUT_FILENO, "  -q           quiet output\n");
 	dprintf(STDOUT_FILENO, "  -c NUMBER    stop after sending NUMBER packets\n");
+	dprintf(STDOUT_FILENO, "  -i NUMBER    wait NUMBER seconds between sending each packet\n");
 	dprintf(STDOUT_FILENO, "  --ttl=N      specify N as time-to-live\n\n");
 	exit(EXIT_SUCCESS);
 }

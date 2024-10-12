@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/11 09:41:21 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 15:31:01 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,6 @@ void	ping_routine(t_ping *ping)
 
 	gettimeofday(&(ping->timer.end), NULL);
 	ping->timer.elapsed_time = (ping->timer.end.tv_sec - ping->timer.begin.tv_sec) * 1000000 + (ping->timer.end.tv_usec - ping->timer.begin.tv_usec);
-	if (ping->timer.elapsed_time < 1000000)
-		usleep(1000000 - ping->timer.elapsed_time);
+	if (ping->timer.elapsed_time < 1000000 * ping->options.delay)
+		usleep((1000000 * ping->options.delay) - ping->timer.elapsed_time);
 }

@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:04:31 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/11 09:50:59 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 15:22:51 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void check_option(t_ping *ping, char *flag)
 	}
 }
 
-int check_num(t_ping *ping, char *ptr, size_t max_val, bool zero)
+unsigned int	check_num(t_ping *ping, char *ptr, size_t max_val, bool zero, char mode)
 {
 	unsigned long	value;
 	int				i;
@@ -64,7 +64,7 @@ int check_num(t_ping *ping, char *ptr, size_t max_val, bool zero)
 		i++;
 	}
 	value *= sign;
-	if (value == 0 && !zero)
+	if ((value == 0 && !zero) || (value <= 1 && mode == 'i'))
 	{
 		dprintf(STDERR_FILENO, "ft_ping: option value too small: %s\n", ptr);
 		free_struct(ping);
@@ -76,7 +76,7 @@ int check_num(t_ping *ping, char *ptr, size_t max_val, bool zero)
 		free_struct(ping);
 		exit(EXIT_FAILURE);
 	}
-	return ((int)value);
+	return ((unsigned int)value);
 }
 
 void parse_args(t_ping *ping, int ac, char **av)
@@ -89,10 +89,10 @@ void parse_args(t_ping *ping, int ac, char **av)
 		if (!ft_strncmp(av[i], "--ttl", 5))
 		{
 			if (av[i][5] == '=')
-				ping->options.ttl = check_num(ping, av[i] + 6, 255, 0);
+				ping->options.ttl = check_num(ping, av[i] + 6, 255, 0, 't');
 			else if (av[i + 1])
 			{
-				ping->options.ttl = check_num(ping, av[i + 1], 255, 0);
+				ping->options.ttl = check_num(ping, av[i + 1], 255, 0, 't');
 				i++;
 			}
 			else
@@ -108,15 +108,32 @@ void parse_args(t_ping *ping, int ac, char **av)
 			if (av[i][1] == 'c')
 			{
 				if (ft_strlen(av[i]) != 2)
-					ping->options.max_packets = check_num(ping, av[i] + 2, 0, 1);
+					ping->options.max_packets = check_num(ping, av[i] + 2, 0, 1, 'c');
 				else if (av[i + 1])
 				{
-					ping->options.max_packets = check_num(ping, av[i + 1], 0, 1);
+					ping->options.max_packets = check_num(ping, av[i + 1], 0, 1, 'c');
 					i++;
 				}
 				else
 				{
 					dprintf(STDERR_FILENO, "ft_ping: option requires an argument -- 'c'\n");
+					dprintf(STDERR_FILENO, "Try './ft_ping -?' for more information.\n");
+					free_struct(ping);
+					exit(EXIT_FAILURE);
+				}
+			}
+			else if (av[i][1] == 'i')
+			{
+				if (ft_strlen(av[i]) != 2)
+					ping->options.delay = check_num(ping, av[i] + 2, 0, 0, 'i');
+				else if (av[i + 1])
+				{
+					ping->options.delay = check_num(ping, av[i + 1], 0, 0, 'i');
+					i++;
+				}
+				else
+				{
+					dprintf(STDERR_FILENO, "ft_ping: option requires an argument -- 'i'\n");
 					dprintf(STDERR_FILENO, "Try './ft_ping -?' for more information.\n");
 					free_struct(ping);
 					exit(EXIT_FAILURE);
