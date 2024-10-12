@@ -6,13 +6,13 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:05:47 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/12 23:28:46 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/13 01:37:17 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_ping.h"
 
-int	set_packet_lifetime(t_ping *ping)
+static int	set_packet_lifetime(t_ping *ping)
 {
 	if (!ping->options.ttl)
 		ping->options.ttl = DEF_TTL;
@@ -21,7 +21,7 @@ int	set_packet_lifetime(t_ping *ping)
 	return (0);
 }
 
-int resolve_host(char *hostname, struct addrinfo **res)
+static int	resolve_host(char *hostname, struct addrinfo **res)
 {
 	struct addrinfo hints;
 
@@ -38,8 +38,7 @@ int resolve_host(char *hostname, struct addrinfo **res)
 	return (0);
 }
 
-//consider implementing custom freeaddrinfo
-int get_socket_ip(t_ping *ping)
+int	get_socket_ip(t_ping *ping)
 {
 	struct addrinfo *res;
 
@@ -67,7 +66,7 @@ int get_socket_ip(t_ping *ping)
 	return (0);
 }
 
-int setup_socket(t_ping *ping)
+int	setup_socket(t_ping *ping)
 {
 	ping->network.socket_fd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
 	if (ping->network.socket_fd == -1)

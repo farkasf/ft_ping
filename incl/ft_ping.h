@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/13 00:59:30 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/13 01:32:58 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,23 +115,15 @@ void			free_struct(t_ping *ping);
 void			check_uid(void);
 double			newton_sqrt(double num);
 
-void			check_option(t_ping *ping, char *flag);
 void			parse_args(t_ping *ping, int ac, char **av);
-unsigned int	check_num(t_ping *ping, char *ptr, size_t max_val, bool zero, char mode);
 
-int				set_packet_lifetime(t_ping *ping);
-int				resolve_host(char *hostname, struct addrinfo **res);
 int				get_socket_ip(t_ping *ping);
 int				setup_socket(t_ping *ping);
 
 void			ping_routine(t_ping *ping);
-void			analyze_reply(t_ping *ping, t_reply *reply);
-void			calculate_rrt(t_ping *ping, t_reply *reply);
-void			update_stats(t_ping *ping, const t_reply *reply);
 
 void			receive_echo_reply(t_ping *ping, t_reply *reply);
 void			send_echo_request(t_ping *ping);
-unsigned short	checksum(void *header, int size);
 
 void			print_ping_header(t_ping *ping);
 void			print_ping_response(t_ping *ping, t_reply *reply);

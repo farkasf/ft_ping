@@ -6,13 +6,13 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/12 23:22:28 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/13 01:36:40 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_ping.h"
 
-void	update_stats(t_ping *ping, const t_reply *reply)
+static void	update_stats(t_ping *ping, const t_reply *reply)
 {
 	if (reply->rrt < ping->stats.min_t || ping->stats.min_t == 0)
 		ping->stats.min_t = reply->rrt;
@@ -23,7 +23,7 @@ void	update_stats(t_ping *ping, const t_reply *reply)
 	ping->stats.total_t_sq += reply->rrt * reply->rrt;
 }
 
-void	calculate_rrt(t_ping *ping, t_reply *reply)
+static void	calculate_rrt(t_ping *ping, t_reply *reply)
 {
 	double	seconds;
 	double	useconds;
@@ -34,7 +34,7 @@ void	calculate_rrt(t_ping *ping, t_reply *reply)
 	reply->rrt = seconds * 1000 + useconds / 1000;
 }
 
-void	analyze_reply(t_ping *ping, t_reply *reply)
+static void	analyze_reply(t_ping *ping, t_reply *reply)
 {
 	struct iphdr	*ip_hdr;
 	struct icmphdr	*icmp_hdr;

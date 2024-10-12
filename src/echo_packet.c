@@ -6,13 +6,13 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 08:46:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/12 16:39:11 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/13 01:41:02 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_ping.h"
 
-unsigned short	checksum(void *header, int size)
+static unsigned short	checksum(void *header, int size)
 {
 	unsigned short	*buf;
 	unsigned short	checksum;
@@ -43,7 +43,8 @@ void	receive_echo_reply(t_ping *ping, t_reply *reply)
  	timeout.tv_usec = 500000;
  	setsockopt(ping->network.socket_fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
 	addr_size = sizeof(recv_addr);
-	reply->recv_bytes = recvfrom(ping->network.socket_fd, reply->recv_data, sizeof(reply->recv_data), 0, (struct sockaddr *)&recv_addr, &addr_size);
+	reply->recv_bytes = recvfrom(ping->network.socket_fd, reply->recv_data, \
+		sizeof(reply->recv_data), 0, (struct sockaddr *)&recv_addr, &addr_size);
 	if (reply->recv_bytes == -1)
 	{
 		if (errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK)
@@ -66,7 +67,7 @@ void	send_echo_request(t_ping *ping)
 
 	ft_memset(&req_packet, 0, sizeof(req_packet));
 	header = (struct icmp *)req_packet;
-	header->icmp_type = ICMP_ECHO; //ECHO type 8
+	header->icmp_type = ICMP_ECHO;
 	header->icmp_code = 0;
 	header->icmp_id = htons(ping->network.pid);
 	header->icmp_seq = htons(ping->network.sequence);
@@ -74,7 +75,8 @@ void	send_echo_request(t_ping *ping)
 	header->icmp_cksum = checksum(req_packet, sizeof(req_packet));
 	
 	gettimeofday(&(ping->timer.rtt_start), NULL);
-	sent_bytes = sendto(ping->network.socket_fd, &req_packet, sizeof(req_packet), 0, (struct sockaddr *)&ping->network.remote_addr, sizeof(ping->network.remote_addr));
+	sent_bytes = sendto(ping->network.socket_fd, &req_packet, sizeof(req_packet), 0, \
+		(struct sockaddr *)&ping->network.remote_addr, sizeof(ping->network.remote_addr));
 	if (sent_bytes == -1)
 	{
 		dprintf(STDERR_FILENO, "ft_ping: sendto failed\n");

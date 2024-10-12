@@ -6,13 +6,13 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:04:31 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/12 22:31:33 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/13 01:36:17 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_ping.h"
 
-void check_option(t_ping *ping, char *flag)
+static void	check_option(t_ping *ping, char *flag)
 {
 	int i;
 
@@ -38,7 +38,7 @@ void check_option(t_ping *ping, char *flag)
 	}
 }
 
-unsigned int	check_num(t_ping *ping, char *ptr, size_t max_val, bool zero, char mode)
+static unsigned int	check_num(t_ping *ping, char *ptr, size_t max_val, bool zero, char mode)
 {
 	unsigned long	value;
 	int				i;

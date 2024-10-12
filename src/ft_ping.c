@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:01 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/13 01:03:47 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/13 01:39:56 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	sig_handler(int signum)
 		g_sig_status = 0;
 }
 
-void	ping_setup(t_ping *ping)
+static void	ping_setup(t_ping *ping)
 {
 	if (setup_socket(ping) == -1 || get_socket_ip(ping) == -1)
 	{
@@ -43,7 +43,7 @@ void	ping_setup(t_ping *ping)
 		ping->options.data_len = ICMP_DATALEN;
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_ping  ping;
 
