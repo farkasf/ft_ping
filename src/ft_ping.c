@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:01 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/12 16:39:46 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 18:39:10 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int main(int ac, char **av)
 	while (1)
 	{
 		ping_routine(&ping);
-		if (g_sig_status == 0 || ping.network.packets_sent == ping.options.max_packets)
+		if (g_sig_status == 0 || (ping.network.packets_sent == ping.options.max_packets && ping.network.packets_sent > 0))
 			break ;
 	}
 
