@@ -6,11 +6,18 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:06:25 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/13 01:39:27 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/13 01:48:36 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_ping.h"
+
+void	print_formatted_error(t_ping *ping, const char *format, const char *arg)
+{
+	dprintf(STDERR_FILENO, format, arg);
+	free_struct(ping);
+	exit(EXIT_FAILURE);
+}
 
 void	print_usage(void)
 {
@@ -39,6 +46,14 @@ double	newton_sqrt(double num)
 	return (guess);
 }
 
+void	check_uid(void)
+{
+	if (getuid() == 0)
+		return ;
+	dprintf(STDERR_FILENO, "ft_ping: user not root\n");
+	exit(EXIT_FAILURE);
+}
+
 void	free_struct(t_ping *ping)
 {
 	if (ping->network.socket_fd)
@@ -48,12 +63,4 @@ void	free_struct(t_ping *ping)
 		free(ping->network.hostname);
 		ping->network.hostname = NULL;
 	}
-}
-
-void	check_uid(void)
-{
-	if (getuid() == 0)
-		return ;
-	dprintf(STDERR_FILENO, "ft_ping: user not root\n");
-	exit(EXIT_FAILURE);
 }

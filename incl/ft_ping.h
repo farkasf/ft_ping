@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/13 01:32:58 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/13 01:48:44 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,26 +110,34 @@ typedef struct s_ping
 	t_stats		stats;
 }	t_ping;
 
-void			print_usage(void);
-void			free_struct(t_ping *ping);
-void			check_uid(void);
-double			newton_sqrt(double num);
+//echo_packet.c
+void	receive_echo_reply(t_ping *ping, t_reply *reply);
+void	send_echo_request(t_ping *ping);
 
-void			parse_args(t_ping *ping, int ac, char **av);
+//error_log.c
+void	fetch_icmp_error(const t_reply *reply);
+void	print_detailed_err_log(t_ping *ping, t_reply *reply);
 
-int				get_socket_ip(t_ping *ping);
-int				setup_socket(t_ping *ping);
+//parser.c
+void	parse_args(t_ping *ping, int ac, char **av);
 
-void			ping_routine(t_ping *ping);
+//ping_routine.c
+void	ping_routine(t_ping *ping);
 
-void			receive_echo_reply(t_ping *ping, t_reply *reply);
-void			send_echo_request(t_ping *ping);
+//response.c
+void	print_ping_header(t_ping *ping);
+void	print_ping_response(t_ping *ping, t_reply *reply);
+void	print_ping_stats(t_ping *ping);
 
-void			print_ping_header(t_ping *ping);
-void			print_ping_response(t_ping *ping, t_reply *reply);
-void			print_ping_stats(t_ping *ping);
+//socket.c
+int		get_socket_ip(t_ping *ping);
+int		setup_socket(t_ping *ping);
 
-void			fetch_icmp_error(const t_reply *reply);
-void			print_detailed_err_log(t_ping *ping, t_reply *reply);
+//utils.c
+void	print_formatted_error(t_ping *ping, const char *format, const char *arg);
+void	print_usage(void);
+double	newton_sqrt(double num);
+void	check_uid(void);
+void	free_struct(t_ping *ping);
 
 #endif

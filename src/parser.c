@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:04:31 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/13 01:36:17 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/13 01:58:09 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ static void	check_option(t_ping *ping, char *flag)
 			ping->options.quiet = 1;
 			break ;
 		default:
-			dprintf(STDERR_FILENO, "ft_ping: invalid option -- '%c'\n", flag[i]);
-			dprintf(STDERR_FILENO, "Try './ft_ping -?' for more information.\n");
-			free_struct(ping);
-			exit(EXIT_FAILURE);
+			print_formatted_error(ping, "ft_ping: invalid option -- '%c'\nTry './ft_ping -?' for more information.\n", &flag[i]);
 	}
 }
 
@@ -68,17 +65,9 @@ static unsigned int	check_num(t_ping *ping, char *ptr, size_t max_val, bool zero
 	}
 	value *= sign;
 	if ((value == 0 && !zero) || (ptr[0] == '-' && mode == 'i'))
-	{
-		dprintf(STDERR_FILENO, "ft_ping: option value too small: %s\n", ptr);
-		free_struct(ping);
-		exit(EXIT_FAILURE);
-	}
+		print_formatted_error(ping, "ft_ping: option value too small: %s\n", ptr);
 	if (max_val && value > max_val)
-	{
-		dprintf(STDERR_FILENO, "ft_ping: option value too big: %s\n", ptr);
-		free_struct(ping);
-		exit(EXIT_FAILURE);
-	}
+		print_formatted_error(ping, "ft_ping: option value too big: %s\n", ptr);
 	return ((unsigned int)value);
 }
 
@@ -99,12 +88,7 @@ void parse_args(t_ping *ping, int ac, char **av)
 				i++;
 			}
 			else
-			{
-				dprintf(STDERR_FILENO, "ft_ping: option '--ttl' requires an argument\n");
-				dprintf(STDERR_FILENO, "Try './ft_ping -?' for more information.\n");
-				free_struct(ping);
-				exit(EXIT_FAILURE);
-			}
+				print_formatted_error(ping, "ft_ping: option '--ttl' requires an argument\nTry './ft_ping -?' for more information.\n", NULL);
 		}
 		else if (av[i][0] == '-' && ft_strlen(av[i]) > 0)
 		{
@@ -118,12 +102,7 @@ void parse_args(t_ping *ping, int ac, char **av)
 					i++;
 				}
 				else
-				{
-					dprintf(STDERR_FILENO, "ft_ping: option requires an argument -- 'c'\n");
-					dprintf(STDERR_FILENO, "Try './ft_ping -?' for more information.\n");
-					free_struct(ping);
-					exit(EXIT_FAILURE);
-				}
+					print_formatted_error(ping, "ft_ping: option requires an argument -- 'c'\nTry './ft_ping -?' for more information.\n", NULL);
 			}
 			else if (av[i][1] == 'i')
 			{
@@ -135,12 +114,7 @@ void parse_args(t_ping *ping, int ac, char **av)
 					i++;
 				}
 				else
-				{
-					dprintf(STDERR_FILENO, "ft_ping: option requires an argument -- 'i'\n");
-					dprintf(STDERR_FILENO, "Try './ft_ping -?' for more information.\n");
-					free_struct(ping);
-					exit(EXIT_FAILURE);
-				}
+					print_formatted_error(ping, "ft_ping: option requires an argument -- 'i'\nTry './ft_ping -?' for more information.\n", NULL);
 			}
 			else if (av[i][1] == 's')
 			{
@@ -153,12 +127,7 @@ void parse_args(t_ping *ping, int ac, char **av)
 					i++;
 				}
 				else
-				{
-					dprintf(STDERR_FILENO, "ft_ping: option requires an argument -- 's'\n");
-					dprintf(STDERR_FILENO, "Try './ft_ping -?' for more information.\n");
-					free_struct(ping);
-					exit(EXIT_FAILURE);
-				}
+					print_formatted_error(ping, "ft_ping: option requires an argument -- 's'\nTry './ft_ping -?' for more information.\n", NULL);
 			}
 			else
 				check_option(ping, av[i]);
@@ -177,10 +146,5 @@ void parse_args(t_ping *ping, int ac, char **av)
 		free_struct(ping);
 	}
 	if (ping->network.hostname == NULL || strlen(ping->network.hostname) == 0)
-	{
-		dprintf(STDERR_FILENO, "ft_ping: missing host operand\n");
-		dprintf(STDERR_FILENO, "Try './ft_ping -?' for more information.\n");
-		free_struct(ping);
-		exit(EXIT_FAILURE);
-	}
+		print_formatted_error(ping, "ft_ping: missing host operand\nTry './ft_ping -?' for more information.\n", NULL);
 }
