@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:07:03 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/12 16:38:34 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 17:20:25 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,15 @@ void	print_detailed_err_log(t_ping *ping, t_reply *reply)
 
 	i = 0;
 	reply->ip_dump->tot_len = htons(IP_HDRLEN + ICMP_HDRLEN + ping->options.data_len);
-	//reply->ip_dump->tot_len = htons(ntohs(reply->ip_dump->tot_len) - ICMP_HDRLEN - IP_HDRLEN);
+	reply->ip_dump->tos = htons(0);
+
 	dprintf(STDOUT_FILENO, "IP Hdr Dump:\n");
 	while (i < IP_HDRLEN)
 	{
 		dprintf(STDOUT_FILENO, " %02x%02x", ((unsigned char *)reply->ip_dump)[i], ((unsigned char *)reply->ip_dump)[i + 1]);
 		i += 2;
 	}
+
 	dprintf(STDOUT_FILENO, "\nVr HL TOS  Len   ID Flg  off TTL Pro  cks      Src\tDst\tData\n");
 	dprintf(STDOUT_FILENO," %1x  %1x  %02x %04x %04x   %1x %04x  %02x  %02x %04x %s  %s \n", 
 		reply->ip_dump->version, reply->ip_dump->ihl, reply->ip_dump->tos, htons(reply->ip_dump->tot_len), ntohs(reply->ip_dump->id), 

@@ -14,21 +14,32 @@ CC = cc
 INCL = -I ./incl
 R = rm -rf
 
+RED = \033[0;31m
+GREEN = \033[0;32m
+BLUE = \033[0;34m
+YELLOW = \033[1;33m
+NC = \033[0m
+
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	make all -C ./libft
+	@echo "Compiling libft..."
+	@make all -C ./libft
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	@echo "$(GREEN)$(NAME) ready$(NC)"
 
 %.o: %.c
+	@echo "$(BLUE)Compiling $<...$(NC)"
 	$(CC) $(CFLAGS) -c $< -o $@ $(INCL)
 
 clean:
-	$(R) $(OBJS)
-	${MAKE} clean -C ./libft
+	@echo "$(YELLOW)Cleaning...$(NC)"
+	@$(R) $(OBJS)
+	@${MAKE} clean -C ./libft
 
 fclean: clean
-	$(R) $(NAME)
-	${MAKE} fclean -C ./libft
+	@echo "$(RED)Full clean done.$(NC)"
+	@$(R) $(NAME)
+	@${MAKE} fclean -C ./libft
 
 re: fclean all
