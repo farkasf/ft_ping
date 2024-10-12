@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:01 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/12 21:07:47 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/13 01:03:47 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,3 @@ int main(int ac, char **av)
 	free_struct(&ping);
 	exit(EXIT_SUCCESS);
 }
-
-
-/*
-	printf("addr: %s\n", ping.network.hostname);
-	printf("quiet: %d | verbose: %d | help: %d\n", ping.options.quiet, ping.options.verbose, ping.options.help);
-	printf("ttl: %d | packets: %d\n", ping.options.ttl, ping.options.max_packets);
-*/

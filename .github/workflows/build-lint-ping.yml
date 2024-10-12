@@ -1,0 +1,58 @@
+name: Build and lint ft_ping
+
+on:
+  workflow_dispatch:
+
+jobs:
+  checkout-and-install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bear clang-tidy make clang
+
+      - name: Compile the executable
+        run: bear -- make
+
+      - name: Upload compile_commands.json
+        uses: actions/upload-artifact@v4
+        with:
+          name: compilation-database
+          path: compile_commands.json
+
+
+  run-clang-tidy:
+    runs-on: ubuntu-latest
+    needs: checkout-and-install
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download compile_commands.json
+        uses: actions/download-artifact@v4
+        with:
+          name: compilation-database
+
+      - name: Run clang-tidy
+        run: clang-tidy -p compile_commands.json src/*.c > clang-tidy-output.log
+        continue-on-error: true
+
+      - name: Check for clang-tidy output
+        run: |
+          if grep -q . clang-tidy-output.log; then
+            echo "Linting issues found, check clang-tidy output."
+            exit 1
+          else
+            echo "No linting issues found."
+          fi
+        continue-on-error: true
+
+      - name: Upload clang-tidy output
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-output
+          path: clang-tidy-output.log

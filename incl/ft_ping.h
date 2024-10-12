@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/12 23:22:11 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/13 00:59:30 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int				setup_socket(t_ping *ping);
 void			ping_routine(t_ping *ping);
 void			analyze_reply(t_ping *ping, t_reply *reply);
 void			calculate_rrt(t_ping *ping, t_reply *reply);
-void			update_stats(t_ping *ping, t_reply *reply);
+void			update_stats(t_ping *ping, const t_reply *reply);
 
 void			receive_echo_reply(t_ping *ping, t_reply *reply);
 void			send_echo_request(t_ping *ping);
