@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:01 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/30 04:07:25 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 16:39:46 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ void	ping_setup(t_ping *ping)
 	ping->stats.max_t = 0;
 	ping->stats.total_t = 0;
 	ping->stats.total_t_sq = 0;
+
+	if (!ping->options.delay)
+		ping->options.delay = DEF_DELAY;
+	if (!ping->options.data_len)
+		ping->options.data_len = ICMP_DATALEN;
 }
 
 int main(int ac, char **av)
@@ -45,6 +50,7 @@ int main(int ac, char **av)
 	check_uid();
 	ft_memset(&ping, 0, sizeof(t_ping));
 	parse_args(&ping, ac, av);
+
 	ping_setup(&ping);
 
 	signal(SIGINT, &sig_handler);
@@ -53,7 +59,7 @@ int main(int ac, char **av)
 	while (1)
 	{
 		ping_routine(&ping);
-		if (g_sig_status == 0)
+		if (g_sig_status == 0 || ping.network.packets_sent == ping.options.max_packets)
 			break ;
 	}
 
@@ -62,3 +68,10 @@ int main(int ac, char **av)
 	free_struct(&ping);
 	exit(EXIT_SUCCESS);
 }
+
+
+/*
+	printf("addr: %s\n", ping.network.hostname);
+	printf("quiet: %d | verbose: %d | help: %d\n", ping.options.quiet, ping.options.verbose, ping.options.help);
+	printf("ttl: %d | packets: %d\n", ping.options.ttl, ping.options.max_packets);
+*/

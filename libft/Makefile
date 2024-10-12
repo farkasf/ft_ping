@@ -58,14 +58,14 @@ R = rm -f
 all: $(NAME)
 
 $(NAME):
-	$(CC) $(CFLAGS) -c $(SRC) -I $(INCL)
-	$(CLIB) $(NAME) $(OBJS)
+	@$(CC) $(CFLAGS) -c $(SRC) -I $(INCL)
+	@$(CLIB) $(NAME) $(OBJS)
 	$(RLIB) $(NAME)
 
 clean:
-	$(R) $(OBJS)
+	@$(R) $(OBJS)
 
 fclean:	clean
-	$(R) $(NAME)
+	@$(R) $(NAME)
 
 re: fclean all

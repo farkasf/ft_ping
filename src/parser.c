@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:04:31 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/04 01:51:05 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 16:42:50 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,65 @@ void check_option(t_ping *ping, char *flag)
 
 	i = 1;
 	if (!flag[i])
+		return ;
+	switch (flag[i])
 	{
-		free_struct(ping);
-		print_usage();
-	}
-	while (flag[i])
-	{
-		if (flag[i] == 'v')
+		case 'v':
 			ping->options.verbose = 1;
-		else if (flag[i] == '?')
+			break ;
+		case '?':
 			ping->options.help = 1;
-		else if (flag[i] == 'q')
+			break ;
+		case 'q':
 			ping->options.quiet = 1;
-		else
-		{
+			break ;
+		default:
 			dprintf(STDERR_FILENO, "ft_ping: invalid option -- '%c'\n", flag[i]);
 			dprintf(STDERR_FILENO, "Try './ft_ping -?' for more information.\n");
 			free_struct(ping);
 			exit(EXIT_FAILURE);
+	}
+}
+
+unsigned int	check_num(t_ping *ping, char *ptr, size_t max_val, bool zero, char mode)
+{
+	unsigned long	value;
+	int				i;
+	int				sign;
+
+	value = 0;
+	sign = 1;
+	i = 0;
+
+	if (ptr[i] == '-')
+		sign = -1;
+	if (ptr[i] == '-' || ptr[i] == '+')
+		i++;
+	while (ptr[i])
+	{
+		if (!ft_isdigit(ptr[i]))
+		{
+			dprintf(STDERR_FILENO, "ft_ping: invalid value (`%s' near `%s')\n", ptr, ptr);
+			free_struct(ping);
+			exit(EXIT_FAILURE);
 		}
+		value = value * 10 + ptr[i] - '0';
 		i++;
 	}
+	value *= sign;
+	if ((value == 0 && !zero) || (value <= 1 && mode == 'i'))
+	{
+		dprintf(STDERR_FILENO, "ft_ping: option value too small: %s\n", ptr);
+		free_struct(ping);
+		exit(EXIT_FAILURE);
+	}
+	if (max_val && value > max_val)
+	{
+		dprintf(STDERR_FILENO, "ft_ping: option value too big: %s\n", ptr);
+		free_struct(ping);
+		exit(EXIT_FAILURE);
+	}
+	return ((unsigned int)value);
 }
 
 void parse_args(t_ping *ping, int ac, char **av)
@@ -48,8 +86,79 @@ void parse_args(t_ping *ping, int ac, char **av)
 	i = 1;
 	while (i < ac)
 	{
-		if (av[i][0] == '-' && strlen(av[i]) > 0)
-			check_option(ping, av[i]);
+		if (!ft_strncmp(av[i], "--ttl", 5))
+		{
+			if (av[i][5] == '=')
+				ping->options.ttl = check_num(ping, av[i] + 6, 255, 0, 't');
+			else if (av[i + 1])
+			{
+				ping->options.ttl = check_num(ping, av[i + 1], 255, 0, 't');
+				i++;
+			}
+			else
+			{
+				dprintf(STDERR_FILENO, "ft_ping: option '--ttl' requires an argument\n");
+				dprintf(STDERR_FILENO, "Try './ft_ping -?' for more information.\n");
+				free_struct(ping);
+				exit(EXIT_FAILURE);
+			}
+		}
+		else if (av[i][0] == '-' && ft_strlen(av[i]) > 0)
+		{
+			if (av[i][1] == 'c')
+			{
+				if (ft_strlen(av[i]) != 2)
+					ping->options.max_packets = check_num(ping, av[i] + 2, 0, 1, 'c');
+				else if (av[i + 1])
+				{
+					ping->options.max_packets = check_num(ping, av[i + 1], 0, 1, 'c');
+					i++;
+				}
+				else
+				{
+					dprintf(STDERR_FILENO, "ft_ping: option requires an argument -- 'c'\n");
+					dprintf(STDERR_FILENO, "Try './ft_ping -?' for more information.\n");
+					free_struct(ping);
+					exit(EXIT_FAILURE);
+				}
+			}
+			else if (av[i][1] == 'i')
+			{
+				if (ft_strlen(av[i]) != 2)
+					ping->options.delay = check_num(ping, av[i] + 2, 0, 0, 'i');
+				else if (av[i + 1])
+				{
+					ping->options.delay = check_num(ping, av[i + 1], 0, 0, 'i');
+					i++;
+				}
+				else
+				{
+					dprintf(STDERR_FILENO, "ft_ping: option requires an argument -- 'i'\n");
+					dprintf(STDERR_FILENO, "Try './ft_ping -?' for more information.\n");
+					free_struct(ping);
+					exit(EXIT_FAILURE);
+				}
+			}
+			else if (av[i][1] == 's')
+			{
+				if (ft_strlen(av[i]) != 2)
+					ping->options.data_len = check_num(ping, av[i] + 2, ICMP_MAX_PACKETLEN, 1, 's');
+				else if (av[i + 1])
+				{
+					ping->options.data_len = check_num(ping, av[i + 1], ICMP_MAX_PACKETLEN, 1, 's');
+					i++;
+				}
+				else
+				{
+					dprintf(STDERR_FILENO, "ft_ping: option requires an argument -- 's'\n");
+					dprintf(STDERR_FILENO, "Try './ft_ping -?' for more information.\n");
+					free_struct(ping);
+					exit(EXIT_FAILURE);
+				}
+			}
+			else
+				check_option(ping, av[i]);
+		}
 		else
 		{
 			if (ping->network.hostname != NULL)
@@ -71,19 +180,3 @@ void parse_args(t_ping *ping, int ac, char **av)
 		exit(EXIT_FAILURE);
 	}
 }
-
-/*
-ERRORS
-acceptable "ping google.com --ttl 5" OR "ping google.com --ttl=5" OR "ping google.com --ttl='5'"
-invalid:
-└─$ ping google.com --ttl=x      
-ping: invalid value (`x' near `x')
-ping google.com --ttl a b
-ping: invalid value (`a' near `a')
-ping google.com -v --ttl=-5
-ping: option value too big: -5
-ping google.com -v --ttl=0 
-ping: option value too small: 0
- ping google.com -v --ttl=84094809328409328490328
-ping: option value too big: 84094809328409328490328
-*/

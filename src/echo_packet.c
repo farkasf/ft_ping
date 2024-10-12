@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 08:46:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/09/30 04:08:17 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 16:39:11 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	receive_echo_reply(t_ping *ping, t_reply *reply)
 
 void	send_echo_request(t_ping *ping)
 {
-	char			req_packet[ICMP_PACKETLEN];
+	char			req_packet[ICMP_HDRLEN + ping->options.data_len];
 	struct icmp		*header;
 	ssize_t			sent_bytes;
 

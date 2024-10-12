@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:44:42 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/04 01:53:58 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 16:32:45 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	calculate_rrt(t_ping *ping, t_reply *reply)
 
 	seconds = ping->timer.rtt_finish.tv_sec - ping->timer.rtt_start.tv_sec;
 	useconds = ping->timer.rtt_finish.tv_usec - ping->timer.rtt_start.tv_usec;
-	
+
 	reply->rrt = seconds * 1000 + useconds / 1000;
 }
 
@@ -44,7 +44,7 @@ void	analyze_reply(t_ping *ping, t_reply *reply)
 
 	if (icmp_hdr->type == ICMP_ECHO)
 		return ;
-	
+
 	if (icmp_hdr->type == ICMP_ECHOREPLY && ntohs(icmp_hdr->un.echo.id) == ping->network.pid)
 	{
 		reply->success = 1;
@@ -79,18 +79,18 @@ void	ping_routine(t_ping *ping)
 
 	if (echo_reply.success == 0)
 		return ;
-	
+
 	calculate_rrt(ping, &echo_reply);
 	update_stats(ping, &echo_reply);
 
 	if (!ping->options.quiet)
 		print_ping_response(ping, &echo_reply);
-	
+
 	if (echo_reply.success == -1 && ping->options.verbose == 1 && !echo_reply.socket_timeout)
 		print_detailed_err_log(ping, &echo_reply);
 
 	gettimeofday(&(ping->timer.end), NULL);
 	ping->timer.elapsed_time = (ping->timer.end.tv_sec - ping->timer.begin.tv_sec) * 1000000 + (ping->timer.end.tv_usec - ping->timer.begin.tv_usec);
-	if (ping->timer.elapsed_time < 1000000)
-		usleep(1000000 - ping->timer.elapsed_time);
+	if (ping->timer.elapsed_time < 1000000 * ping->options.delay && ping->network.packets_sent != ping->options.max_packets)
+		usleep((1000000 * ping->options.delay) - ping->timer.elapsed_time);
 }

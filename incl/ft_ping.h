@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/04 01:48:14 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/12 16:39:30 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@
 # include <netinet/ip.h>
 # include <netinet/ip_icmp.h>
 
-# define DEF_TTL 64
 # define IP_HDRLEN 20
 # define ICMP_HDRLEN 8
 # define ICMP_DATALEN 56
-# define ICMP_PACKETLEN (ICMP_HDRLEN+ICMP_DATALEN)
 # define ICMP_MAX_PACKETLEN (1500 - IP_HDRLEN - ICMP_HDRLEN)
+# define DEF_TTL 64
+# define DEF_DELAY 1
 
 typedef struct s_network
 {
@@ -53,10 +53,14 @@ typedef struct s_network
 
 typedef struct s_options
 {
-	bool	help;
-	bool	verbose;
-	bool	quiet;
-	int		ttl;
+	bool				help;
+	bool				verbose;
+	bool				quiet;
+	bool				flood;
+	unsigned int		ttl;
+	unsigned int		max_packets;
+	unsigned int		delay;
+	unsigned int		data_len;
 }	t_options;
 
 typedef struct s_reply
@@ -110,9 +114,9 @@ void			free_struct(t_ping *ping);
 void			check_uid(void);
 double			newton_sqrt(double num);
 
-char			*ft_strdup(const char *src);
 void			check_option(t_ping *ping, char *flag);
 void			parse_args(t_ping *ping, int ac, char **av);
+unsigned int	check_num(t_ping *ping, char *ptr, size_t max_val, bool zero, char mode);
 
 int				set_packet_lifetime(t_ping *ping);
 int				resolve_host(char *hostname, struct addrinfo **res);
