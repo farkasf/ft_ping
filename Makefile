@@ -34,13 +34,13 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@ $(INCL)
 
 clean:
-	@echo "$(YELLOW)clean done.$(NC)"
 	@$(R) $(OBJS)
 	@${MAKE} clean -C ./libft
+	@echo "$(YELLOW)clean done.$(NC)"
 
 fclean: clean
-	@echo "$(GREEN)full clean done.$(NC)"
 	@$(R) $(NAME)
 	@${MAKE} fclean -C ./libft
+	@echo "$(GREEN)full clean done.$(NC)"
 
 re: fclean all
