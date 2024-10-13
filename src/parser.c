@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:04:31 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/13 01:58:09 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/13 02:04:07 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	check_option(t_ping *ping, char *flag)
 			ping->options.quiet = 1;
 			break ;
 		default:
-			print_formatted_error(ping, "ft_ping: invalid option -- '%c'\nTry './ft_ping -?' for more information.\n", &flag[i]);
+			print_formatted_error(ping, "ft_ping: invalid option -- '%s'\nTry './ft_ping -?' for more information.\n", &flag[i]);
 	}
 }
 
