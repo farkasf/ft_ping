@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:04:31 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/13 02:28:51 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/13 04:59:39 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void parse_args(t_ping *ping, int ac, char **av)
 	int i;
 
 	i = 1;
+	ping->hosts.host_count = 0;
 	while (i < ac)
 	{
 		if (av[i] == NULL || ft_strlen(av[i]) == 0)
@@ -139,17 +140,13 @@ void parse_args(t_ping *ping, int ac, char **av)
 		}
 		else
 		{
-			if (ping->network.hostname != NULL)
-				continue ;
-			ping->network.hostname = ft_strdup(av[i]);
+			ft_strlcpy(ping->hosts.hostnames[ping->hosts.host_count], av[i], ft_strlen(av[i]) + 1);
+			ping->hosts.host_count++;
 		}
 		i++;
 	}
 	if (ping->options.help == 1)
-	{
-		print_usage();
-		free_struct(ping);
-	}
-	if (ping->network.hostname == NULL || strlen(ping->network.hostname) == 0)
+		print_usage(ping);
+	if (ping->hosts.host_count == 0)
 		print_formatted_error(ping, "ft_ping: missing host operand\nTry './ft_ping -?' for more information.\n", NULL);
 }

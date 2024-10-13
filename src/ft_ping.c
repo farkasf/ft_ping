@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:01 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/13 01:39:56 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/13 05:10:51 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,31 @@ static void	ping_setup(t_ping *ping)
 
 int	main(int ac, char **av)
 {
-	t_ping  ping;
+	t_ping			ping;
+	unsigned int	i;
 
+	i = 0;
 	check_uid();
 	ft_memset(&ping, 0, sizeof(t_ping));
 	parse_args(&ping, ac, av);
 
-	ping_setup(&ping);
-
 	signal(SIGINT, &sig_handler);
-	print_ping_header(&ping);
 
-	while (1)
+	while (i < ping.hosts.host_count)
 	{
-		ping_routine(&ping);
-		if (g_sig_status == 0 || (ping.network.packets_sent == ping.options.max_packets && ping.network.packets_sent > 0))
-			break ;
+		ping.network.hostname = ft_strdup(ping.hosts.hostnames[i]);
+		ping_setup(&ping);
+		print_ping_header(&ping);
+		while (1)
+		{
+			ping_routine(&ping);
+			if (g_sig_status == 0 || (ping.network.packets_sent == ping.options.max_packets && ping.network.packets_sent > 0))
+				break ;
+		}
+		print_ping_stats(&ping);
+		free_struct(&ping);
+		i++;
 	}
 
-	print_ping_stats(&ping);
-
-	free_struct(&ping);
 	exit(EXIT_SUCCESS);
 }
