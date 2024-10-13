@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:06:25 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/13 01:48:36 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/13 05:00:29 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_formatted_error(t_ping *ping, const char *format, const char *arg)
 	exit(EXIT_FAILURE);
 }
 
-void	print_usage(void)
+void	print_usage(t_ping *ping)
 {
 	dprintf(STDOUT_FILENO,
 		"Usage: ./ft_ping [OPTION...] HOST ...\n"
@@ -32,6 +32,8 @@ void	print_usage(void)
 		"  -i NUMBER    wait NUMBER seconds between sending each packet\n"
 		"  -s NUMBER    send NUMBER data octets\n"
 		"  --ttl=N      specify N as time-to-live\n\n");
+	free_struct(ping);
+	exit(EXIT_SUCCESS);
 }
 
 double	newton_sqrt(double num)

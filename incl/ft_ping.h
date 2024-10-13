@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 00:09:08 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/13 01:48:44 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/13 05:00:52 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 # define ICMP_MAX_PACKETLEN (1500 - IP_HDRLEN - ICMP_HDRLEN)
 # define DEF_TTL 64
 # define DEF_DELAY 1
+# define MAX_HOSTS 42
+# define MAX_HOSTLEN 256
 
 typedef struct s_network
 {
@@ -102,10 +104,17 @@ typedef struct s_icmp_error
 	char	*err_msg;
 }	t_icmp_error;
 
+typedef struct s_hosts
+{
+	unsigned int	host_count;
+	char			hostnames[MAX_HOSTS][MAX_HOSTLEN];
+}	t_hosts;
+
 typedef struct s_ping
 {
 	t_options	options;
 	t_network	network;
+	t_hosts		hosts;
 	t_timer		timer;
 	t_stats		stats;
 }	t_ping;
@@ -135,7 +144,7 @@ int		setup_socket(t_ping *ping);
 
 //utils.c
 void	print_formatted_error(t_ping *ping, const char *format, const char *arg);
-void	print_usage(void);
+void	print_usage(t_ping *ping);
 double	newton_sqrt(double num);
 void	check_uid(void);
 void	free_struct(t_ping *ping);
