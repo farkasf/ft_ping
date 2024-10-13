@@ -63,8 +63,8 @@ run_test "Verbose ping valid hostname #3" "$PING_CMD 42prague.com -c 2 -v" "2 pa
 run_test "Ping invalid hostname #1" "$PING_CMD invalid_hostname -c 2" "unknown host"
 run_test "Ping invalid hostname #2" "$PING_CMD hashtag#.com -c 2" "unknown host"
 
-run_test "Ping valid hostname with low TTL #1" "$PING_CMD google.com -c 2 --ttl=5" "Time to live exceeded"
-run_test "Verbose ping valid hostname with low TTL #2" "$PING_CMD facebook.com -c 2 --ttl=10 -v" "4500 0054"
+run_test "Ping valid hostname with low TTL #1" "$PING_CMD google.com -c 2 --ttl=1" "Time to live exceeded"
+run_test "Verbose ping valid hostname with low TTL #2" "$PING_CMD facebook.com -c 2 --ttl=1 -v" "4500 0054"
 
 
 run_test "Quiet ping valid IP" "$PING_CMD 8.8.8.8 -c 2 -q" "0% packet loss"
