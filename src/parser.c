@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:04:31 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/13 02:04:07 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/13 02:28:51 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,12 @@ void parse_args(t_ping *ping, int ac, char **av)
 	i = 1;
 	while (i < ac)
 	{
-		if (!ft_strncmp(av[i], "--ttl", 5))
+		if (av[i] == NULL || ft_strlen(av[i]) == 0)
+		{
+			i++;
+			continue ;
+		}
+		else if (!ft_strncmp(av[i], "--ttl", 5))
 		{
 			if (ft_strlen(av[i]) != 6 && ft_strlen(av[i]) != 5)
 				ping->options.ttl = check_num(ping, av[i] + 6, 255, 0, 't');
@@ -90,7 +95,7 @@ void parse_args(t_ping *ping, int ac, char **av)
 			else
 				print_formatted_error(ping, "ft_ping: option '--ttl' requires an argument\nTry './ft_ping -?' for more information.\n", NULL);
 		}
-		else if (av[i][0] == '-' && ft_strlen(av[i]) > 0)
+		else if (av[i][0] == '-' && ft_strlen(av[i]) > 1)
 		{
 			if (av[i][1] == 'c')
 			{
