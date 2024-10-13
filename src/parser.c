@@ -6,7 +6,7 @@
 /*   By: ffarkas <ffarkas@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 03:04:31 by ffarkas           #+#    #+#             */
-/*   Updated: 2024/10/13 04:59:39 by ffarkas          ###   ########.fr       */
+/*   Updated: 2024/10/13 05:16:55 by ffarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static unsigned int	check_num(t_ping *ping, char *ptr, size_t max_val, bool zero
 		if (ptr[i] == '-')
 			sign = -1;
 		if (ptr[i] == '-' || ptr[i] == '+')
-			i++;	
+			i++;
 	}
 	while (ptr[i])
 	{

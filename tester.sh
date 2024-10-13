@@ -37,10 +37,10 @@ run_test() {
     echo -e "$output"
 
     if echo "$output" | grep -q "$expected_output"; then
-        echo -e "\n${GREEN}[✓ ${total_tests}/25] PASSED${NC}\n"
+        echo -e "\n${GREEN}[✓ ${total_tests}/30] PASSED${NC}\n"
         passed_tests=$((passed_tests + 1))
     else
-        echo -e "\n${RED}[x ${total_tests}/25] FAILED${NC}\n"
+        echo -e "\n${RED}[x ${total_tests}/30] FAILED${NC}\n"
         echo -e "${RED}expected: $expected_output${NC}"
         echo -e "${RED}got: $output${NC}\n"
     fi
@@ -81,5 +81,11 @@ run_test "Ping valid hostname with invalid data bytes" "$PING_CMD google.org -c 
 
 run_test "Ping valid IP with invalid TTL" "$PING_CMD 1.1.1.1 --ttl=1000" "value too big"
 run_test "Ping valid IP with empty TTL" "$PING_CMD 1.1.1.1 --ttl" "requires an argument"
+
+run_test "Ping 2 IPs (both valid)" "$PING_CMD 1.1.1.1 127.0.0.1 -c 2" "127.0.0.1 ping statistics"
+run_test "Ping 2 hostnames (both valid)" "$PING_CMD google.com facebook.com -c 2" "PING facebook.com"
+run_test "Ping 2 IPs (1 invalid)" "$PING_CMD 1.1.1.1 350.0.0.1 -c 3" "unknown host"
+run_test "Ping 2 hostnames (1 invalid)" "$PING_CMD google.com gogeloglo.com -c 4" "unknown host"
+run_test "Ping 2 hostnames with low TTL" "$PING_CMD google.com localhost.com -c 2 --ttl=10" "0% packet loss"
 
 echo -e "\n${YELLOW}SUMMARY:${NC} $passed_tests out of $total_tests tests passed.\n"
